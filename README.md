@@ -13,6 +13,6 @@ The three questions that we would like to persue are as follows:
 
 The data souce we find includes data on many different aspect of cancer, including cancer prevalence, cancer mortality over time, causes of cancer and so on. From this source, we can get the information that how cancer is relating to our world that it not only affects each family but also influence sundry countries. During this pandemic, the discussion one health problems should be on the agenda urgently. Via merging different tables, we can extract the data we need, and find the conclusion of our above cancer related questions.
 
-*Link to our book URL: https://maggieli99.github.io/Cancerstatistic/.*
+*Link to our book URL: https://maggieli99.github.io/Cancerstatistic.*
 
 *This repo was initially generated from a bookdown template available here: https://github.com/jtr13/EDAVtemplate.*	
