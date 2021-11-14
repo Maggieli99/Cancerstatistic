@@ -1,6 +1,6 @@
 --- 
-title: "YOUR TITLE HERE"
-author: "YOUR NAMES HERE"
+title: "Cancer Statistic"
+author: "Yiquan Li, Chenxi Jiang, Zezhong Fan"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 ---
