@@ -96,6 +96,10 @@ plot_missing <- function(df, percent=FALSE) {
           panel.grid.minor.x = element_blank(),panel.border = element_rect(fill = NA)) +
     ggtitle("Missing value patterns")
   
+  if (percent==TRUE) {
+    col_bar <- col_bar + ylim(0, 100)
+  }
+  
   col_bar + (ggplot()+theme_void())+ main_plot + pattern_bar + plot_layout(ncol=2, widths=c(4,1), heights=c(1,3))
 }
 ```
