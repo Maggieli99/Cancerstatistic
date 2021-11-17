@@ -1,2 +1,15 @@
 # Data sources
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE,
+                      echo = TRUE)
+```
+```{r}
+data <- read.csv(file="cancerdata.csv", header=T)
+library(tidyverse)
+library(tidyr)
+newdata <- data[,c(5,6,9)]
+tidydata <- newdata  %>%  
+ pivot_wider(names_from = rei, values_from = val)
+```
+
