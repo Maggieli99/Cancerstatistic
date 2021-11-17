@@ -1,9 +1,5 @@
 # Data sources
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(warning = FALSE, message = FALSE,
-                      echo = TRUE)
-```
 ```{r}
 data <- read.csv(file="cancerdata.csv", header=T)
 library(tidyverse)
