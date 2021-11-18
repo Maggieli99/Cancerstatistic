@@ -3,7 +3,7 @@
 Yiquan Li, Chenxi Jiang, Zezhong Fan
 
 
-Human beings have been fighting against cancer for several centuries and are still exploring in all the ways to treat cancer. In this project, we would like to learn more about the cancer in different aspects, and see whether the world has really made progress against cancer and by how much. Specifically, we will combine different data visualization methods and frames to explore deeply current situation of cancer around the world and the progress in the medical realm again the caner. 
+Human beings have been fighting against cancer for several centuries and are still exploring in all the ways to treat cancer. In this project, we would like to learn more about the cancer in different aspects, and see whether the world has really made progress against cancer and by how much. Specifically, we will combine different data visualization methods and frames to explore deeply current situation of cancer around the world and the progress in the medical realm against caner. 
 
 
 In this projeect, three questions that we would like to persue are as follows:
