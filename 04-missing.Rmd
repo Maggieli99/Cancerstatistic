@@ -35,9 +35,9 @@ In order to see the relationship between cancer types and external risks, we ana
 ```{r}
 plot_missing <- function(df, percent=FALSE) {
   missing_patterns <- data.frame(is.na(df)) %>%
-    group_by_all() %>%
-    count(name = "count", sort = TRUE) %>%
-    ungroup()
+  group_by_all() %>%
+  count(name = "count", sort = TRUE) %>%
+  ungroup()
   
   pure_pattern <- missing_patterns[,-which(names(missing_patterns) == "count")]
   pure_pattern$incomplete <- as.logical(rowSums(pure_pattern))
@@ -49,13 +49,11 @@ plot_missing <- function(df, percent=FALSE) {
   
   tidymissing$rowname <- as.factor(as.numeric(tidymissing$rowname))
 
-  main_plot <- ggplot(tidymissing, aes(x=fct_reorder(key,-value*count, sum),y=fct_rev(rowname),
-                                       fill=value, alpha=incomplete)) +
+  main_plot <- ggplot(tidymissing, aes(x=fct_reorder(key,-value*count, sum),y=fct_rev(rowname),fill=value, alpha=incomplete)) +
     geom_tile(color="white") + theme_classic() +
     scale_fill_discrete(type=c("grey", "purple")) +
     scale_alpha_manual(values = c(1,0.5)) +
-    annotate("text", x = length(unique(tidymissing$key))/2+0.5, y = which(rev(pure_pattern$incomplete)==FALSE),
-             label="complete cases") + 
+    annotate("text", x = length(unique(tidymissing$key))/2+0.5, y = which(rev(pure_pattern$incomplete)==FALSE), label="complete cases") + 
     xlab('variable') +
     ylab('missing pattern') + 
     theme(legend.position = "none")
@@ -65,16 +63,24 @@ plot_missing <- function(df, percent=FALSE) {
   rownames_to_column() 
   
   missing_by_pattern$rowname <- as.factor(as.numeric(missing_by_pattern$rowname))
+  missing_by_pattern$percentage <- missing_by_pattern$count/sum(missing_by_pattern$count)*100
+  
+  missing_by_pattern$plotby <- missing_by_pattern$count 
+  y_lab_pattern = "row count"
+  if (percent==TRUE) {
+    missing_by_pattern$plotby <- missing_by_pattern$percentage
+    y_lab_pattern = "% rows"
+  }
 
-  pattern_bar <- ggplot(missing_by_pattern, aes(x=fct_rev(rowname), y=count, alpha=incomplete)) + 
+  pattern_bar <- ggplot(missing_by_pattern, aes(x=fct_rev(rowname), y=plotby, alpha=incomplete)) + 
     geom_bar(stat="identity",fill="blue") + 
     scale_alpha_manual(values = c(1,0.5)) +
     coord_flip() +
-    ylab('row count') +
-    theme(panel.background = element_rect(fill = NA), axis.title.y = element_blank(), panel.grid.major.y = element_blank(),
-          panel.grid.major.x = element_line(colour="grey"), panel.grid.minor.x = element_line(colour="grey"),
-          panel.grid.minor.y = element_blank(),panel.border = element_rect(fill = NA), legend.position = "none")
-
+    ylab(y_lab_pattern) +
+    theme(panel.background = element_rect(fill = NA), axis.title.y = element_blank(), panel.grid.major.y = element_blank(), 
+          panel.grid.major.x = element_line(colour="grey"), panel.grid.minor.x = element_line(colour="grey"), panel.grid.minor.y = element_blank(),
+          panel.border = element_rect(fill = NA), legend.position = "none")
+  
   temp_df = apply(data.frame(is.na(df)),2,sum)
   ylabel = "num rows\n missing:"
   if (percent==TRUE) {
@@ -88,15 +94,14 @@ plot_missing <- function(df, percent=FALSE) {
 
   colnames(missing_by_col) <- c('key', 'pattern_count')
 
-  col_bar <- ggplot(missing_by_col, aes(x=fct_reorder(key, -pattern_count), y = pattern_count)) +
-    geom_bar(stat="identity",fill="lightblue") +
+  col_bar <- ggplot(missing_by_col, aes(x=fct_reorder(key, -pattern_count), y = pattern_count))+geom_bar(stat="identity",fill="lightblue") +
     ylab(ylabel) +
-    theme(panel.background = element_rect(fill = NA), axis.title.x = element_blank(), panel.grid.major.x = element_blank(),
-          panel.grid.major.y = element_line(colour="grey"), 
-          panel.grid.minor.x = element_blank(),panel.border = element_rect(fill = NA)) +
+    theme(panel.background = element_rect(fill = NA), axis.title.x = element_blank(), panel.grid.major.x = element_blank(), 
+          panel.grid.major.y = element_line(colour="grey"), panel.grid.minor.x = element_blank(),panel.border = element_rect(fill = NA)) +
     ggtitle("Missing value patterns")
   
   if (percent==TRUE) {
+    pattern_bar <- pattern_bar + ylim(0, 100)
     col_bar <- col_bar + ylim(0, 100)
   }
   
