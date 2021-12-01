@@ -11,9 +11,11 @@ The primary data source for this project is from Global Health Data Exchange (GH
 * __Measure__: The choices are deaths, years of life lost (YLLs), years lived with disability (YLDs), disability-adjusted life years (DALYs), prevalence, incidence, life expectancy, healthy life expectancy (HALE), maternal mortality ratio (MMR), and summary exposure value (SEV)
 * __Sex__: The choices are male, female, and both
 
-If we generates the results for all measures for every single entry of the above menus, the dataset will be so huge and complicated since it contains data for countries all over the world for 30 years. So, to better 
+If we generates the results for all measures for every single entry of the above menus, the dataset will be so huge and complicated since it contains data for countries all over the world for 30 years. So, to better conduct our analysis on several focuses, we generated three major datasets from GBD Results Tool and each group member was responsible for creating their dataset to solve corresponding questions. Details about the datasets are as follows:
 
-## question 1
+## The Effect of Genetic Factors on Cancer
+
+
 
 ## question 2
 
