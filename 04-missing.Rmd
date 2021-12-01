@@ -1,5 +1,7 @@
 # Missing values
 
+## question 1
+
 ```{r}
 library(readr)
 library(tidyverse)
@@ -146,3 +148,8 @@ From the plot above, tracheal, bronchus, and lung cancer is affected by external
 Uterine cancer, thyroid cancer and gallbladder and biliary tract cancer have the same missing pattern. Colon and rectum cancer and breast cancer have same missing pattern. It suggests that there might be some similarity in these kinds of cancer, though not obvious now, but may help people find treatment to these types of cancer.
 
 Nasopharynx cancer and larynx cancer have same missing pattern. Other pharynx cancer and lip and oral cavity cancer have same missing pattern. And these two missing patterns are also similar to each other. It makes sense since they are all related to throat.
+
+
+## question 2
+
+## question 3

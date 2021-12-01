@@ -1,11 +1,23 @@
 # Data sources
 
-```{r}
-data <- read.csv(file="cancerdata.csv", header=T)
-library(tidyverse)
-library(tidyr)
-newdata <- data[,c(5,6,9)]
-tidydata <- newdata  %>%  
- pivot_wider(names_from = rei, values_from = val)
-```
+The primary data source for this project is from Global Health Data Exchange (GHDx), which is a catalog of global health and demographic data. It provides statistics and other information about all kinds of diseases for different countries and for the globe as a whole. We use the [*GBD (Global Burden of Disease) Results Tool*](http://ghdx.healthdata.org/gbd-results-tool) built inside to generate our datasets about cancer in different aspects. The tool allows retrieval of GBD results and provides several variables for people to choose and combine. A brief introduction about the contents this tool supplies are as follows:
+
+* __Base__: This menu provides 2 choices: *Single* means single year estimates, *Change* means multi-year estimates for select year ranges
+* __Location__: This menu provides GBD super regions, regions, countries, subnational units, and custom regions (WHO regions, World Bank Income Levels, and more) to choose from
+* __Year__: 1990-2019
+* __Context__: This menu defines the type of indicator results people can access. It contains all GBD causes, risks, impairments, injuries by nature, etiology, etc. Once we select one of these results, a new drop-down menu about that result (varialbe) will appear and we can choose the values of our interest.
+* __Age__: All GBD age groups
+* __Metric(units)__: The choices are number, rate, and percent
+* __Measure__: The choices are deaths, years of life lost (YLLs), years lived with disability (YLDs), disability-adjusted life years (DALYs), prevalence, incidence, life expectancy, healthy life expectancy (HALE), maternal mortality ratio (MMR), and summary exposure value (SEV)
+* __Sex__: The choices are male, female, and both
+
+If we generates the results for all measures for every single entry of the above menus, the dataset will be so huge and complicated since it contains data for countries all over the world for 30 years. So, to better 
+
+## question 1
+
+## question 2
+
+## question 3
+
+
 
