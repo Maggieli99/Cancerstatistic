@@ -1,0 +1,12 @@
+Column Name,Description
+measure,Variable name of interest (chr)
+location,Location (chr)
+sex,Sex (chr)
+age,Age group (chr)
+cause,Cancer type (chr)
+rei,Risk type (chr)
+metric,Unit of measure (chr)
+year,Year (num)
+val,Value of measure with corresponding metric (num)
+upper,Upper bound of val (num)
+lower,Lower bound of val (num)

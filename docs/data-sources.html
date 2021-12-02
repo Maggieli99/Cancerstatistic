@@ -138,6 +138,69 @@
 <p>Details about the datasets are as follows:</p>
 <div id="the-effect-of-genetic-factors-on-cancer" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> The Effect of Genetic Factors on Cancer</h2>
+<p><strong>Dataset: risk.csv</strong></p>
+<p>The dataset is created from GBD Results Tool by choosing risk as context.</p>
+<table>
+<caption><span id="tab:unnamed-chunk-4">Table 2.1: </span>Risk Data Desription</caption>
+<thead>
+<tr class="header">
+<th align="left">Column Name</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">measure</td>
+<td align="left">Variable name of interest (chr)</td>
+</tr>
+<tr class="even">
+<td align="left">location</td>
+<td align="left">Location (chr)</td>
+</tr>
+<tr class="odd">
+<td align="left">sex</td>
+<td align="left">Sex (chr)</td>
+</tr>
+<tr class="even">
+<td align="left">age</td>
+<td align="left">Age group (chr)</td>
+</tr>
+<tr class="odd">
+<td align="left">cause</td>
+<td align="left">Cancer type (chr)</td>
+</tr>
+<tr class="even">
+<td align="left">rei</td>
+<td align="left">Risk type (chr)</td>
+</tr>
+<tr class="odd">
+<td align="left">metric</td>
+<td align="left">Unit of measure (chr)</td>
+</tr>
+<tr class="even">
+<td align="left">year</td>
+<td align="left">Year (num)</td>
+</tr>
+<tr class="odd">
+<td align="left">val</td>
+<td align="left">Value of measure with corresponding metric (num)</td>
+</tr>
+<tr class="even">
+<td align="left">upper</td>
+<td align="left">Upper bound of val (num)</td>
+</tr>
+<tr class="odd">
+<td align="left">lower</td>
+<td align="left">Lower bound of val (num)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Issues with this dataset: </strong></p>
+<ol style="list-style-type: decimal">
+<li><p>The column “location” only has one value “Global” so it is not a useful variable in the dataset. And the columns “upper” and “lower” give a boundaries to “val”. In this project, we only used the “val” provided and not consider the range of “val”. So, “upper” and “lower” columns were also not used. The unused columns need to be removed.</p></li>
+<li><p>All the measures are assigned with three metrics: number, percent, and rate. Some metrics are not suitable to be used on some measures. For instance, percentage of years of life lost does not make much sense. So, we might consider deleting some meaningless or unused metrics to decrease data size.</p></li>
+<li><p>The dataset is not tidy. Column “measure” actually contains the variables of our interests. And “val” stores the values of corresponding variable. This dataset needs to be pivot to a tidy format.</p></li>
+</ol>
 </div>
 <div id="question-2" class="section level2" number="2.2">
 <h2><span class="header-section-number">2.2</span> question 2</h2>

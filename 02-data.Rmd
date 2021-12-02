@@ -1,5 +1,10 @@
 # Data sources
 
+```{r}
+library(here)
+```
+
+
 The primary data source for this project is Global Health Data Exchange (GHDx) and [*World Bank*](https://data.worldbank.org/country). 
 
 GHDx is a catalog of global health and demographic data. It provides statistics and other information about all kinds of diseases for different countries and for the globe as a whole. We use the [*GBD (Global Burden of Disease) Results Tool*](http://ghdx.healthdata.org/gbd-results-tool) built inside to generate our datasets about cancer in different aspects. The tool allows retrieval of GBD results and provides several variables for people to choose and combine. A brief introduction about the contents this tool supplies are as follows:
@@ -21,9 +26,27 @@ Details about the datasets are as follows:
 
 ## The Effect of Genetic Factors on Cancer
 
+**Dataset: risk.csv**
+
+The dataset is created from GBD Results Tool by choosing risk as context. 
+
+```{r}
+risk_desription <- readr::read_csv(here::here("./data/data_description.csv"))
+knitr::kable(risk_desription[1:11, ], caption="Risk Data Desription", row.names=FALSE, font_size=10)
+```
+
+**Issues with this dataset: **
+
+1. The column "location" only has one value "Global" so it is not a useful variable in the dataset. And the columns "upper" and "lower" give a boundaries to "val". In this project, we only used the "val" provided and not consider the range of "val". So, "upper" and "lower" columns were also not used. The unused columns need to be removed.
+
+2. All the measures are assigned with three metrics: number, percent, and rate. Some metrics are not suitable to be used on some measures. For instance, percentage of years of life lost does not make much sense. So, we might consider deleting some meaningless or unused metrics to decrease data size.
+
+3. The dataset is not tidy. Column "measure" actually contains the variables of our interests. And "val" stores the values of corresponding variable. This dataset needs to be pivot to a tidy format.
 
 
 ## question 2
+
+
 
 ## question 3
 
