@@ -1,6 +1,8 @@
 # Data sources
 
-The primary data source for this project is from Global Health Data Exchange (GHDx), which is a catalog of global health and demographic data. It provides statistics and other information about all kinds of diseases for different countries and for the globe as a whole. We use the [*GBD (Global Burden of Disease) Results Tool*](http://ghdx.healthdata.org/gbd-results-tool) built inside to generate our datasets about cancer in different aspects. The tool allows retrieval of GBD results and provides several variables for people to choose and combine. A brief introduction about the contents this tool supplies are as follows:
+The primary data source for this project is Global Health Data Exchange (GHDx) and [*World Bank*](https://data.worldbank.org/country). 
+
+GHDx is a catalog of global health and demographic data. It provides statistics and other information about all kinds of diseases for different countries and for the globe as a whole. We use the [*GBD (Global Burden of Disease) Results Tool*](http://ghdx.healthdata.org/gbd-results-tool) built inside to generate our datasets about cancer in different aspects. The tool allows retrieval of GBD results and provides several variables for people to choose and combine. A brief introduction about the contents this tool supplies are as follows:
 
 * __Base__: This menu provides 2 choices: *Single* means single year estimates, *Change* means multi-year estimates for select year ranges
 * __Location__: This menu provides GBD super regions, regions, countries, subnational units, and custom regions (WHO regions, World Bank Income Levels, and more) to choose from
@@ -11,7 +13,11 @@ The primary data source for this project is from Global Health Data Exchange (GH
 * __Measure__: The choices are deaths, years of life lost (YLLs), years lived with disability (YLDs), disability-adjusted life years (DALYs), prevalence, incidence, life expectancy, healthy life expectancy (HALE), maternal mortality ratio (MMR), and summary exposure value (SEV)
 * __Sex__: The choices are male, female, and both
 
-If we generates the results for all measures for every single entry of the above menus, the dataset will be so huge and complicated since it contains data for countries all over the world for 30 years. So, to better conduct our analysis on several focuses, we generated three major datasets from GBD Results Tool and each group member was responsible for creating their dataset to solve corresponding questions. Details about the datasets are as follows:
+If we generates the results for all measures for every single entry of the above menus, the dataset will be so huge and complicated since it contains data for countries all over the world for 30 years. So, to better conduct our analysis on several focuses, we generated three major datasets from GBD Results Tool and each group member was responsible for creating their dataset to solve corresponding questions. 
+
+World Bank collects and provides large amount of global development data and was used as data supplement of countries' statistics in our dataset.
+
+Details about the datasets are as follows:
 
 ## The Effect of Genetic Factors on Cancer
 
