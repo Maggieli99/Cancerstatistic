@@ -50,5 +50,11 @@ knitr::kable(risk_desription[1:11, ], caption="Risk Data Desription", row.names=
 
 ## question 3
 
+**Dataset: making_progress.csv**
 
+The dataset is created from GBD Results Tool by choosing cause as context. 
 
+```{r}
+_desription <- readr::read_csv(here::here("./data/data_description.csv"))
+knitr::kable(risk_desription[1:11, ], caption="Risk Data Desription", row.names=FALSE, font_size=10)
+```
