@@ -1,6 +1,17 @@
 # Data transformation
 
+```{r}
+
+```
+
+All of our datasets generated from GBD results tool need to be pre-processed as they are not in a tidy format originally. Please go to our [github repo chapter](https://github.com/Maggieli99/Cancerstatistic/blob/main/03-cleaning.Rmd) to see code in detail.
+
 ## question 1
+
+```{r}
+
+```
+
 
 ## question 2
 
