@@ -34,7 +34,7 @@
 <link rel="prev" href="data-sources.html"/>
 <link rel="next" href="missing-values.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="libs/jquery-3.5.1/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -144,6 +144,220 @@
 </div>
 <div id="question-2-1" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> question 2</h2>
+<pre><code>##    measure                 location  metric year          val
+## 1   Deaths                Argentina  Number 1990 5.619593e+04
+## 2   Deaths                Argentina Percent 1990 2.231355e-01
+## 3   Deaths                Argentina    Rate 1990 1.696700e+02
+## 4   Deaths                   Mexico  Number 1990 4.680850e+04
+## 5   Deaths                   Mexico Percent 1990 1.062692e-01
+## 6   Deaths                   Mexico    Rate 1990 5.475466e+01
+## 7   Deaths                    Japan  Number 1990 2.415229e+05
+## 8   Deaths                    Japan Percent 1990 2.977360e-01
+## 9   Deaths                    Japan    Rate 1990 1.918879e+02
+## 10  Deaths                    Italy  Number 1990 1.498295e+05
+## 11  Deaths                    Italy Percent 1990 2.816464e-01
+## 12  Deaths                    Italy    Rate 1990 2.637924e+02
+## 13  Deaths               Tajikistan  Number 1990 3.625847e+03
+## 14  Deaths               Tajikistan Percent 1990 8.818303e-02
+## 15  Deaths               Tajikistan    Rate 1990 6.744957e+01
+## 16  Deaths                    Kenya  Number 1990 6.879552e+03
+## 17  Deaths                    Kenya Percent 1990 3.564519e-02
+## 18  Deaths                    Kenya    Rate 1990 2.966159e+01
+## 19  Deaths United States of America  Number 1990 5.335869e+05
+## 20  Deaths United States of America Percent 1990 2.502222e-01
+## 21  Deaths United States of America    Rate 1990 2.104003e+02
+## 22  Deaths              Australasia  Number 1990 3.774901e+04
+## 23  Deaths              Australasia Percent 1990 2.622791e-01
+## 24  Deaths              Australasia    Rate 1990 1.861615e+02
+## 25  Deaths                    Nepal  Number 1990 9.472466e+03
+## 26  Deaths                    Nepal Percent 1990 4.261438e-02
+## 27  Deaths                    Nepal    Rate 1990 4.848581e+01
+## 28  Deaths                   Latvia  Number 1990 5.608181e+03
+## 29  Deaths                   Latvia Percent 1990 1.680224e-01
+## 30  Deaths                   Latvia    Rate 1990 2.109383e+02
+## 31  Deaths           United Kingdom  Number 1990 1.684237e+05
+## 32  Deaths           United Kingdom Percent 1990 2.641162e-01
+## 33  Deaths           United Kingdom    Rate 1990 2.930474e+02
+## 34  Deaths                    Congo  Number 1990 1.653765e+03
+## 35  Deaths                    Congo Percent 1990 5.436006e-02
+## 36  Deaths                    Congo    Rate 1990 6.764386e+01
+## 37  Deaths                     Iraq  Number 1990 7.955960e+03
+## 38  Deaths                     Iraq Percent 1990 6.690880e-02
+## 39  Deaths                     Iraq    Rate 1990 4.521300e+01
+## 40  Deaths                  Ukraine  Number 1990 1.156779e+05
+## 41  Deaths                  Ukraine Percent 1990 1.865958e-01
+## 42  Deaths                  Ukraine    Rate 1990 2.196558e+02
+## 43  Deaths                   Mexico  Number 2019 1.055908e+05
+## 44  Deaths                   Mexico Percent 2019 1.429648e-01
+## 45  Deaths                   Mexico    Rate 2019 8.451311e+01
+## 46  Deaths                    Japan  Number 2019 4.377455e+05
+## 47  Deaths                    Japan Percent 2019 3.126711e-01
+## 48  Deaths                    Japan    Rate 2019 3.425549e+02
+## 49  Deaths                    Nepal  Number 2019 2.155121e+04
+## 50  Deaths                    Nepal Percent 2019 1.113377e-01
+## 51  Deaths                    Nepal    Rate 2019 7.085395e+01
+## 52  Deaths                     Iraq  Number 2019 2.438134e+04
+## 53  Deaths                     Iraq Percent 2019 1.355249e-01
+## 54  Deaths                     Iraq    Rate 2019 5.788613e+01
+## 55  Deaths                   Poland  Number 1990 8.331222e+04
+## 56  Deaths                   Poland Percent 1990 2.165635e-01
+## 57  Deaths                   Poland    Rate 1990 2.183360e+02
+## 58  Deaths              Australasia  Number 2019 6.326535e+04
+## 59  Deaths              Australasia Percent 2019 3.080819e-01
+## 60  Deaths              Australasia    Rate 2019 2.176776e+02
+## 61  Deaths           United Kingdom  Number 2019 1.937215e+05
+## 62  Deaths           United Kingdom Percent 2019 3.115414e-01
+## 63  Deaths           United Kingdom    Rate 2019 2.881883e+02
+## 64  Deaths                  Ukraine  Number 2019 9.905296e+04
+## 65  Deaths                  Ukraine Percent 2019 1.416693e-01
+## 66  Deaths                  Ukraine    Rate 2019 2.249035e+02
+## 67  Deaths                    Kenya  Number 2019 2.322478e+04
+## 68  Deaths                    Kenya Percent 2019 7.898300e-02
+## 69  Deaths                    Kenya    Rate 2019 4.623899e+01
+## 70  Deaths                    Congo  Number 2019 3.354091e+03
+## 71  Deaths                    Congo Percent 2019 9.375547e-02
+## 72  Deaths                    Congo    Rate 2019 6.369519e+01
+## 73  Deaths                   Latvia  Number 2019 5.557025e+03
+## 74  Deaths                   Latvia Percent 2019 2.025327e-01
+## 75  Deaths                   Latvia    Rate 2019 2.901398e+02
+## 76  Deaths                    Italy  Number 2019 1.891501e+05
+## 77  Deaths                    Italy Percent 2019 2.944695e-01
+## 78  Deaths                    Italy    Rate 2019 3.136132e+02
+## 79  Deaths                   Poland  Number 2019 1.212394e+05
+## 80  Deaths                   Poland Percent 2019 2.982733e-01
+## 81  Deaths                   Poland    Rate 2019 3.154446e+02
+## 82  Deaths United States of America  Number 2019 7.631462e+05
+## 83  Deaths United States of America Percent 2019 2.590043e-01
+## 84  Deaths United States of America    Rate 2019 2.326816e+02
+## 85  Deaths                Argentina  Number 2019 8.466900e+04
+## 86  Deaths                Argentina Percent 2019 2.427305e-01
+## 87  Deaths                Argentina    Rate 2019 1.876725e+02
+## 88  Deaths               Tajikistan  Number 2019 5.360602e+03
+## 89  Deaths               Tajikistan Percent 2019 1.099668e-01
+## 90  Deaths               Tajikistan    Rate 2019 5.647248e+01</code></pre>
+<pre><code>##         Country.Name                     Indicator.Name        X1990
+## 46         Argentina GNI, PPP (current international $) 2.242720e+11
+## 47         Argentina      GDP per capita (constant LCU) 9.885800e+03
+## 1489       Australia GNI, PPP (current international $) 2.853030e+11
+## 1490       Australia      GDP per capita (constant LCU) 4.834434e+04
+## 2932     Congo, Rep. GNI, PPP (current international $) 6.912728e+09
+## 2933     Congo, Rep.      GDP per capita (constant LCU) 1.058322e+06
+## 4375  United Kingdom GNI, PPP (current international $) 9.911960e+11
+## 4376  United Kingdom      GDP per capita (constant LCU) 2.002897e+04
+## 5818            Iraq GNI, PPP (current international $)           NA
+## 5819            Iraq      GDP per capita (constant LCU) 3.918851e+06
+## 7261           Italy GNI, PPP (current international $) 1.041640e+12
+## 7262           Italy      GDP per capita (constant LCU) 2.477721e+04
+## 8704           Japan GNI, PPP (current international $) 2.435060e+12
+## 8705           Japan      GDP per capita (constant LCU) 3.450770e+06
+## 10147          Kenya GNI, PPP (current international $) 3.400479e+10
+## 10148          Kenya      GDP per capita (constant LCU) 7.119992e+04
+## 11590         Latvia GNI, PPP (current international $)           NA
+## 11591         Latvia      GDP per capita (constant LCU)           NA
+## 13033         Mexico GNI, PPP (current international $) 6.604020e+11
+## 13034         Mexico      GDP per capita (constant LCU) 1.100918e+05
+## 14476          Nepal GNI, PPP (current international $) 1.629151e+10
+## 14477          Nepal      GDP per capita (constant LCU) 3.344915e+04
+## 15919         Poland GNI, PPP (current international $) 2.230850e+11
+## 15920         Poland      GDP per capita (constant LCU) 1.793333e+04
+## 17362     Tajikistan GNI, PPP (current international $) 1.394881e+10
+## 17363     Tajikistan      GDP per capita (constant LCU) 8.878884e+02
+## 18805        Ukraine GNI, PPP (current international $) 3.874460e+11
+## 18806        Ukraine      GDP per capita (constant LCU) 7.633626e+04
+## 20248  United States GNI, PPP (current international $) 5.902290e+12
+## 20249  United States      GDP per capita (constant LCU) 3.927860e+04
+##              X2019
+## 46    9.920750e+11
+## 47    1.542050e+04
+## 1489  1.281930e+12
+## 1490  7.698098e+04
+## 2932  1.691064e+10
+## 2933  8.018675e+05
+## 4375  3.182900e+12
+## 4376  3.050957e+04
+## 5818  4.306120e+11
+## 5819  5.387711e+06
+## 7261  2.702260e+12
+## 7262  2.889268e+04
+## 8704  5.525330e+12
+## 8705  4.401446e+06
+## 10147 2.324830e+11
+## 10148 9.604201e+04
+## 11590 6.046637e+10
+## 11591 1.439697e+04
+## 13033 2.533610e+12
+## 13034 1.450901e+05
+## 14476 1.190850e+11
+## 14477 8.178426e+04
+## 15919 1.244980e+12
+## 15920 5.249344e+04
+## 17362 4.037105e+10
+## 17363 7.769365e+02
+## 18805 5.779130e+11
+## 18806 6.207422e+04
+## 20248 2.169000e+13
+## 20249 6.083677e+04</code></pre>
+<pre><code>##      Country.Name                     Indicator.Name  Year       Number
+## 1       Argentina GNI, PPP (current international $) X1990 2.242720e+11
+## 2       Argentina      GDP per capita (constant LCU) X1990 9.885800e+03
+## 3       Australia GNI, PPP (current international $) X1990 2.853030e+11
+## 4       Australia      GDP per capita (constant LCU) X1990 4.834434e+04
+## 5     Congo, Rep. GNI, PPP (current international $) X1990 6.912728e+09
+## 6     Congo, Rep.      GDP per capita (constant LCU) X1990 1.058322e+06
+## 7  United Kingdom GNI, PPP (current international $) X1990 9.911960e+11
+## 8  United Kingdom      GDP per capita (constant LCU) X1990 2.002897e+04
+## 9            Iraq GNI, PPP (current international $) X1990           NA
+## 10           Iraq      GDP per capita (constant LCU) X1990 3.918851e+06
+## 11          Italy GNI, PPP (current international $) X1990 1.041640e+12
+## 12          Italy      GDP per capita (constant LCU) X1990 2.477721e+04
+## 13          Japan GNI, PPP (current international $) X1990 2.435060e+12
+## 14          Japan      GDP per capita (constant LCU) X1990 3.450770e+06
+## 15          Kenya GNI, PPP (current international $) X1990 3.400479e+10
+## 16          Kenya      GDP per capita (constant LCU) X1990 7.119992e+04
+## 17         Latvia GNI, PPP (current international $) X1990           NA
+## 18         Latvia      GDP per capita (constant LCU) X1990           NA
+## 19         Mexico GNI, PPP (current international $) X1990 6.604020e+11
+## 20         Mexico      GDP per capita (constant LCU) X1990 1.100918e+05
+## 21          Nepal GNI, PPP (current international $) X1990 1.629151e+10
+## 22          Nepal      GDP per capita (constant LCU) X1990 3.344915e+04
+## 23         Poland GNI, PPP (current international $) X1990 2.230850e+11
+## 24         Poland      GDP per capita (constant LCU) X1990 1.793333e+04
+## 25     Tajikistan GNI, PPP (current international $) X1990 1.394881e+10
+## 26     Tajikistan      GDP per capita (constant LCU) X1990 8.878884e+02
+## 27        Ukraine GNI, PPP (current international $) X1990 3.874460e+11
+## 28        Ukraine      GDP per capita (constant LCU) X1990 7.633626e+04
+## 29  United States GNI, PPP (current international $) X1990 5.902290e+12
+## 30  United States      GDP per capita (constant LCU) X1990 3.927860e+04
+## 31      Argentina GNI, PPP (current international $) X2019 9.920750e+11
+## 32      Argentina      GDP per capita (constant LCU) X2019 1.542050e+04
+## 33      Australia GNI, PPP (current international $) X2019 1.281930e+12
+## 34      Australia      GDP per capita (constant LCU) X2019 7.698098e+04
+## 35    Congo, Rep. GNI, PPP (current international $) X2019 1.691064e+10
+## 36    Congo, Rep.      GDP per capita (constant LCU) X2019 8.018675e+05
+## 37 United Kingdom GNI, PPP (current international $) X2019 3.182900e+12
+## 38 United Kingdom      GDP per capita (constant LCU) X2019 3.050957e+04
+## 39           Iraq GNI, PPP (current international $) X2019 4.306120e+11
+## 40           Iraq      GDP per capita (constant LCU) X2019 5.387711e+06
+## 41          Italy GNI, PPP (current international $) X2019 2.702260e+12
+## 42          Italy      GDP per capita (constant LCU) X2019 2.889268e+04
+## 43          Japan GNI, PPP (current international $) X2019 5.525330e+12
+## 44          Japan      GDP per capita (constant LCU) X2019 4.401446e+06
+## 45          Kenya GNI, PPP (current international $) X2019 2.324830e+11
+## 46          Kenya      GDP per capita (constant LCU) X2019 9.604201e+04
+## 47         Latvia GNI, PPP (current international $) X2019 6.046637e+10
+## 48         Latvia      GDP per capita (constant LCU) X2019 1.439697e+04
+## 49         Mexico GNI, PPP (current international $) X2019 2.533610e+12
+## 50         Mexico      GDP per capita (constant LCU) X2019 1.450901e+05
+## 51          Nepal GNI, PPP (current international $) X2019 1.190850e+11
+## 52          Nepal      GDP per capita (constant LCU) X2019 8.178426e+04
+## 53         Poland GNI, PPP (current international $) X2019 1.244980e+12
+## 54         Poland      GDP per capita (constant LCU) X2019 5.249344e+04
+## 55     Tajikistan GNI, PPP (current international $) X2019 4.037105e+10
+## 56     Tajikistan      GDP per capita (constant LCU) X2019 7.769365e+02
+## 57        Ukraine GNI, PPP (current international $) X2019 5.779130e+11
+## 58        Ukraine      GDP per capita (constant LCU) X2019 6.207422e+04
+## 59  United States GNI, PPP (current international $) X2019 2.169000e+13
+## 60  United States      GDP per capita (constant LCU) X2019 6.083677e+04</code></pre>
 </div>
 <div id="question-3-1" class="section level2" number="3.3">
 <h2><span class="header-section-number">3.3</span> question 3</h2>
