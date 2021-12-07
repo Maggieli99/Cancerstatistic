@@ -1,18 +1,47 @@
 # Data transformation
 
 ```{r}
-
+library(readr)
+library(tidyverse)
+library(tidyr)
+library(dplyr)
 ```
 
 All of our datasets generated from GBD results tool need to be pre-processed as they are not in a tidy format originally. Please go to our [github repo chapter](https://github.com/Maggieli99/Cancerstatistic/blob/main/03-cleaning.Rmd) to see code in detail.
 
-## question 1
+## The Effect of Genetic Factors on Cancer
+
+For the risk data, we first removed the used columns "location", "upper" and "lower". And then we pivoted our dataset so that the combinations of *measure* and *metric* became new columns (variables) in the wider tidy data and values in *val* were placed in the corresponding entries. We also updated the columns names of our new data frame so that these names are more precise. Finally, noticed that all of our columns of character type have limited number of categories, we transformed all character columns into factors.
 
 ```{r}
+cancer_risk <- read_csv("./data/risk.csv")
+```
+```{r}
+# clean and pivot dataset
+cancer_risk <- cancer_risk %>% 
+  select(-c('location', 'upper', 'lower')) %>%
+  pivot_wider(names_from = c(measure, metric), values_from = val) 
 
+names(cancer_risk)[c(4, 9:14)]<-c('risk', 'YLDs_Number', 'YLDs_Percent', 'YLDs_Rate',  'YLLs_Number', 'YLLs_Percent', 'YLLs_Rate')
 ```
 
+```{r}
+# make str columns factors
+cancer_risk$sex <- factor(cancer_risk$sex)
+cancer_risk$age <- factor(cancer_risk$age)
+cancer_risk$cause <- factor(cancer_risk$cause)
+cancer_risk$risk <- factor(cancer_risk$risk)
+cancer_risk$year <- factor(cancer_risk$year)
+```
+
+After data cleaning and transformation, our *cancer_risk* data frame has much less rows and contains only meaningful variables.
+
+```{r}
+str(cancer_risk)
+```
 
 ## question 2
+
+
 
 ## question 3
