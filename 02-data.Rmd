@@ -55,6 +55,14 @@ knitr::kable(risk_desription[1:11, ], caption="Risk Data Desription", row.names=
 The dataset is created from GBD Results Tool by choosing cause as context. 
 
 ```{r}
-# <- readr::read_csv(here::here("./data/data_description.csv"))
-#knitr::kable(risk_desription[1:11, ], caption="Risk Data Desription", row.names=FALSE, font_size=10)
+making_progress_description<- readr::read_csv(here::here("./data/data_description.csv"))
+make_progress_description<- making_progress_description[c(1,2,3,4,5,7,8,9,10,11),]
+knitr::kable(make_progress_description[1:10,], caption="Making_progress_description Data Desription", row.names=FALSE, font_size=10)
 ```
+**Issues with this dataset: **
+
+1. Same as our topic 1, the column "location" only has one value "Global" which cannot provide more information. And the columns "upper" and "lower" give a boundaries to "val". However, we only used the "val" provided and not consider the range of "val". Hence, the unused columns need to be removed.
+
+2. Considering that the dataset size need to be reduced, we may delete some meaningless and confusing metrics.
+
+3. Here are three different "measure" way in our dataset, which we need to do tidy work to make them readable and clear.

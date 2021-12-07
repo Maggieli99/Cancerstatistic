@@ -45,3 +45,18 @@ str(cancer_risk)
 
 
 ## question 3
+
+For the making_progress data, we need to do the similar step with risk data, that is, we first removed the used columns "location", "upper" and "lower". And then we pivoted our dataset so that the combinations of *measure* and *metric* became new columns (variables) in the wider tidy data and values in *val* were placed in the corresponding entries. To be more precise and clear, we need to change the column name for the metric. Last but not least, we still need to transform all character columns into factors.
+
+```{r}
+cancer_making_progress <- read_csv("./data/making_progess.csv")
+```
+
+```{r}
+# clean and pivot dataset
+cancer_making_progress <- cancer_making_progress %>% 
+  select(-c('location', 'upper', 'lower')) %>%
+  pivot_wider(names_from = c(measure, metric), values_from = val) 
+
+names(cancer_making_progress)[c(5, 7:9)]<-c('DALYs_Rate', 'YLLs_Rate', 'YLDs_Percent', 'YLDs_Rate')
+```

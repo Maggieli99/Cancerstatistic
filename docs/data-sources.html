@@ -24,7 +24,7 @@
 <meta name="author" content="Yiquan Li, Chenxi Jiang, Zezhong Fan" />
 
 
-<meta name="date" content="2021-12-03" />
+<meta name="date" content="2021-12-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -209,6 +209,63 @@
 <h2><span class="header-section-number">2.3</span> question 3</h2>
 <p><strong>Dataset: making_progress.csv</strong></p>
 <p>The dataset is created from GBD Results Tool by choosing cause as context.</p>
+<table>
+<caption><span id="tab:unnamed-chunk-5">Table 2.2: </span>Making_progress_description Data Desription</caption>
+<thead>
+<tr class="header">
+<th align="left">Column Name</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">measure</td>
+<td align="left">Variable name of interest (chr)</td>
+</tr>
+<tr class="even">
+<td align="left">location</td>
+<td align="left">Location (chr)</td>
+</tr>
+<tr class="odd">
+<td align="left">sex</td>
+<td align="left">Sex (chr)</td>
+</tr>
+<tr class="even">
+<td align="left">age</td>
+<td align="left">Age group (chr)</td>
+</tr>
+<tr class="odd">
+<td align="left">cause</td>
+<td align="left">Cancer type (chr)</td>
+</tr>
+<tr class="even">
+<td align="left">metric</td>
+<td align="left">Unit of measure (chr)</td>
+</tr>
+<tr class="odd">
+<td align="left">year</td>
+<td align="left">Year (num)</td>
+</tr>
+<tr class="even">
+<td align="left">val</td>
+<td align="left">Value of measure with corresponding metric (num)</td>
+</tr>
+<tr class="odd">
+<td align="left">upper</td>
+<td align="left">Upper bound of val (num)</td>
+</tr>
+<tr class="even">
+<td align="left">lower</td>
+<td align="left">Lower bound of val (num)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Issues with this dataset: </strong></p>
+<ol style="list-style-type: decimal">
+<li><p>Same as our topic 1, the column “location” only has one value “Global” which cannot provide more information. And the columns “upper” and “lower” give a boundaries to “val”. However, we only used the “val” provided and not consider the range of “val”. Hence, the unused columns need to be removed.</p></li>
+<li><p>Considering that the dataset size need to be reduced, we may delete some meaningless and confusing metrics.</p></li>
+<li><p>Here are three different “measure” way in our dataset, which we need to do tidy work to make them readable and clear.</p></li>
+</ol>
 
 </div>
 </div>
