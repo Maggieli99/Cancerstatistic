@@ -86,6 +86,11 @@ cancer_making_progress <- read_csv("./data/making_progess.csv")
 ```
 
 ```{r}
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+library(tidyr)
+library(highcharter)
 # clean and pivot dataset
 cancer_making_progress <- cancer_making_progress %>% 
   select(-c('location', 'upper', 'lower')) %>%
