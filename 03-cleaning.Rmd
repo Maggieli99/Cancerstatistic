@@ -42,26 +42,37 @@ str(cancer_risk)
 
 ## question 2
 ```{r}
-cancer = read.csv(file = './data/cancer.csv',header = TRUE)
+cancer = read.csv(file = 'cancer.csv',header = TRUE)
 cancer = cancer %>%
   select(-c('sex','age','upper','lower','cause')) %>%
   filter(cancer$year != '2000')
 cancer = filter(cancer,cancer$measure == 'Deaths')
 cancer = filter(cancer, cancer$location != 'India')
 cancer
-country = read.csv(file = './data/country.csv',header = TRUE)
+country = read.csv(file = 'country.csv',header = TRUE)
 country = country[which(country$Indicator.Code %in% c('NY.GNP.MKTP.PP.CD','NY.GDP.PCAP.KN')),]
 country = country %>%
   select(c('Country.Name','Indicator.Name','X1990','X2019'))
-country
 country = country %>%
   gather(Year,Number,c(X1990,X2019))
-country
 country = country %>%
   spread(Indicator.Name,Number)
 country = country %>% mutate(Year=recode(Year, 
                          'X1990'="1990",
                          'X2019'="2019"))
+country
+colnames(country) = c('country','year','GDP','GNI')
+country$year = as.factor(country$year)
+cancer$year = as.factor(cancer$year)
+cancer$location = as.factor(cancer$location)
+country$country = as.factor(country$country)
+levels(cancer$location)[levels(cancer$location)=="United States of America"] <- "United States"
+levels(cancer$location)[levels(cancer$location)=="Australasia"] <- "Australia"
+levels(country$country)[levels(country$country)=="Congo, Rep."] <- "Congo"
+data = full_join(cancer,country, by = c('location' = 'country','year' = 'year'))
+data = data %>%
+  spread(metric,val)
+data
 ```
 
 
