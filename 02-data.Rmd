@@ -24,7 +24,7 @@ World Bank collects and provides large amount of global development data and was
 
 Details about the datasets are as follows:
 
-## The Effect of Genetic Factors on Cancer
+## The Effect of External Factors on Cancer
 
 **Dataset: risk.csv**
 

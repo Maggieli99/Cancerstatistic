@@ -1,6 +1,203 @@
 # Results
 
-## question 1
+```{r}
+library(tidyverse)
+library(tidyr)
+library(dplyr)
+library(highcharter)
+library(ggplot2)
+library(ggmosaic)
+library(treemap)
+```
+
+
+## The Effect of External Factors on Cancer
+
+The etiology of cancer is very complicated and has not been fully understood. But it has been found that the two major causes of cancer are genetic factors and external factors. While one of the biggest fears of human comes from cancer and people usually feel helpless in the face of cancer, we should realize that keep good life style might significantly reduce our chance of getting some kind of cancer. So below we analyze the effect of external factors on cancer and give potential ways of preventing cancer.
+
+
+### Share of cancer deaths attributed to risk factors from 1990-2019
+
+```{r}
+risk_level1 <- c("Environmental/occupational risks", "Behavioral risks", "Metabolic risks")
+cancer_risk_1 <- cancer_risk %>% 
+  filter(sex=="Both", risk %in% risk_level1) %>%
+  group_by(caus, year) %>%
+  mutate(share_of_death = sum(Dt_N*Dt_P)/sum(Dt_N)) %>% 
+  summarize(share_of_death=mean(share_of_death))
+```  
+
+```{r}
+series <- cancer_risk_1 %>% 
+  group_by(caus) %>% 
+  do(item = list(
+    cause = first(.$caus),
+    sequence = .$share_of_death,
+    value = first(.$share_of_death)
+  )) %>% 
+  .$item
+
+series <- series[order(sapply(series,"[[",3),decreasing = TRUE)]
+```
+
+
+```{r}
+highchart() %>%
+  #hc_chart(data = series, type="bar", hcaes(y = sequence, color = cause)) %>%
+  hc_add_series(data = series, type="bar") %>% 
+  hc_motion(
+    enabled = TRUE,
+    labels = cancer_risk_1$year,
+    axisLabel = "year",
+    #series = c(0,1),
+    autoplay=TRUE
+  ) %>%
+  hc_xAxis(categories = sapply(series,"[[",1)) %>%
+  hc_yAxis(min = 0, max = 1)%>%
+  hc_colorAxis(stops = color_stops(n = 3, colors = c("firebrick2","white","dodgerblue3")))%>%
+  hc_title(text = "<b>Share of cancer deaths attributed to risk factors, 1990-2019</b>") %>%
+  hc_legend(align="right")
+
+```
+
+The plot above shows an estimation of share of global cancer deaths which are attributed to external risk factors over the 30 years. For example, around 71% of larynx cancer deaths are attributed to some external risk. Only the remaining 29% of deaths are assumed to have no attribution to risk factors, and would occur naturally in the absence of external factors. So, we can see that the cancers with blue bar, like cervical cancer and mesothelioma, are more caused by external risks; the cancers with red bar, like thyroid cancer and ovarian cancer, are more due to genetic factors and so that people can do less to prevent such cancers. 
+
+We can notice that cervical cancer is 100% due to external risks according to the plot. It might be to extreme to say but it is a suggestion that people can definitely do a lot of things to successfully prevent having such cancer.
+
+We also observe that over the past 30 years, though the overall share of cancer deaths due to external risks is not changing dramatically, the external risk attribution does have some changes for some kind of cancer. For instance, esophageal cancer is less and less due to external risks. This may be because the food people nowadays are more various and cleaner and people take drinking water more seriously than before. So people are having less chancing getting esophageal cancer due to lack of vegetable eating and water drinking. On the contrary, liver cancer are more and more due to external risks. This may have relation with the constantly increasing smoke rate of human.
+
+### Risk distribution over different types of cancer (1990, 2019)
+
+```{r}
+cancer_risk_2 <- cancer_risk %>% 
+  filter(sex=="Both", risk %in% risk_level1) %>%
+  group_by(year, caus,risk) %>%
+  mutate(Freq = sum(Dt_N)) %>% 
+  summarize(Freq=mean(Freq))
+```
+
+```{r}
+data_1990 <- cancer_risk_2%>%filter(year==1990)
+data_1990$risk <- droplevels(data_1990)$risk
+```
+
+```{r}
+a<-ggplot(data = data_1990) +
+  geom_mosaic(aes(weight=Freq,x=product(risk), fill = risk, 
+                  conds = product(caus)), show.legend = FALSE) +
+  labs(title='Risk Proportions in 1990',x = "Cancer") +
+  theme(axis.text.x = element_text(angle = 90),axis.text=element_blank(),text = element_text(size=8))
+```
+
+```{r}
+data_2019 <- cancer_risk_2%>%filter(year==2019)
+data_2019$risk <- droplevels(data_2019)$risk
+```
+
+```{r}
+b<-ggplot(data = data_2019) +
+  geom_mosaic(aes(weight=Freq,x=product(risk), fill = risk, 
+                  conds = product(caus))) +
+  labs(title='Risk Proportions in 2019',x = "Cancer") +
+  theme(axis.text.x = element_text(angle = 90),axis.text=element_blank(),axis.ticks.y=element_blank(),axis.title.y = element_blank(),legend.text=element_text(size=7),text = element_text(size=8))
+```
+
+```{r}
+a+b
+```
+
+In the first plot, we can only see external risks as a whole. So, in the second plot above, we further explore what exactly those risks are and how people can do to prevent specific kind of cancer potentially. GHDx defines three major external risks: behavioral risks, environmental/occupational risks, and metabolic risks. From the mosaic plot above, we can see that behavioral risks are the biggest group of risks, and environmental risks are relatively the smallest group. Thus, there is a lot of things human can control to prevent them from having cancer.
+
+None of these cancers have a very even distribution of these three risks. They all bias to some one or two kinds of risks, which correspond to their features and give us suggestions on how we can fight against these cancers.
+
+We notice that cervical cancer, pancreatic cancer and prostate cancer are almost all due to behavioral risks. That means, by controlling our behavior or actively making some changes to our life style, the risk of developing these cancers can be minimized at most. Gallbladder and biliary tract cancer, multiple myeloma, non-hodgkin lymphoma, and uterine cancer are almost all due to metabolic risks. Metabolic risks are basically about physique of people. These risks have already built into the human body. So a better way to guard against these cancer might be to properly deal with these physical problems to avoiding them from hurting their bodies further. Finally, we can see that mesothelioma is almost all due to environmental/occupational risks. It makes sense because we know that it is mostly caused by exposure to asbestos. If people does not live in an environment with high asbestos density, then risk of getting mesothelioma is supper low. For people have to exposure to asbestos, protection is especially important.
+
+Comparing the risk proportion from 1990 to 2019, we can still see that there is not much difference. But we can indeed see that the proportion of metabolic risks increased and the proportion of behavioral risks decreased by a little. This change may indicate human have improved their behaviors to make progress against cancer, but in the mean while, increasing pressure also cause more other physical and metabolic problems that lead to getting cancer.
+
+
+### Death Number and Rate by Risks over the 30 years (1990-2019)
+
+```{r}
+bahavioral_risk <- c("Alcohol use", "Dietary risks", "Drug use", "Low physical activity", "Tobacco", "Unsafe sex")
+environmental_risk <- c("Air pollution", "Occupational risks", "Other environmental risks")
+metabolic_risk <- c("High fasting plasma glucose", "High body-mass index")
+
+cancer_risk_3 <- cancer_risk %>% 
+  filter(sex=="Both", !risk %in% risk_level1) %>%
+  group_by(caus, risk) %>%
+  mutate(risk_category=case_when(risk %in% bahavioral_risk ~"Behavioral",
+         risk %in% environmental_risk ~"Environmental",
+         risk %in% metabolic_risk ~"Metabolic"),
+         death_rate=sum(Dt_R),
+         death_number=sum(Dt_N)) %>%
+  summarize(risk_category=first(risk_category), death_number=mean(death_number),death_rate=mean(death_rate))
+```
+
+```{r}
+treemap(cancer_risk_3, 
+        index=c("risk_category", "risk"),
+        vSize="death_number",
+        vColor="death_rate",
+        type="value",
+        format.legend = list(scientific=FALSE, big.mark=" "))
+```
+
+When talking about behavioral risks or metabolic risks, it is still a little bit abstract and general. So, to get an even better understanding of all these risks for cancer, we sum up the data for every year and created a tree map to break down the risk categories into even deeper levels. In the above tree map, the area means the average number of people death from cancer because of the risk stated per year, the color means death rate (number of deaths per 100k people). We can clearly see that tobacco is definitely the most common and dangerous carcinogen. It leads to the largest number of people to die from cancer and has the largest death rate as well. 
+For risks from environment, air pollution and occupational risks are the two major components. So people might want to wear face masks and make good protection against the environmental attack. For metabolic risks, high body-mass index and high fasting plasma glucose are the two main causes. That means people with obesity and high blood sugar need special attention for cancer prevention.
+
+
+### Death Rate by Sex and Age for Different Risks
+
+```{r}
+cancer_risk_4 <- cancer_risk %>% 
+  filter(sex!="Both", risk %in% risk_level1) %>%
+  group_by(sex, age, risk, year) %>%
+  mutate(death_rate=sum(Dt_R)) %>%
+  summarize(death_rate=first(death_rate))
+```
+
+```{r}
+behavioral_death <- cancer_risk_4 %>% filter(risk=="Behavioral risks")
+environment_death <- cancer_risk_4 %>% filter(risk=="Environmental/occupational risks")
+metabolic_death <- cancer_risk_4 %>% filter(risk=="Metabolic risks")
+```
+
+```{r}
+g1<-ggplot(behavioral_death, aes(x=year, y=death_rate, group=sex:age))+
+  geom_line(aes(color=sex))+
+  geom_point(aes(shape=age),size=1,show.legend = FALSE)+
+  labs(title='Death due to Behavioral Risk by Age & Sex', y="Death Rate\n per 100k") +
+  theme(axis.text.x = element_blank(),
+        axis.title.x = element_blank(),
+        axis.ticks.x = element_blank())
+
+g2<-ggplot(environment_death, aes(x=year, y=death_rate, group=sex:age))+
+  geom_line(aes(color=sex),show.legend = FALSE)+
+  geom_point(aes(shape=age),size=1)+
+  labs(title='Death due to Environmental Risk by Age & Sex', y="Death Rate\n per 100k") +
+  theme(axis.text.x = element_blank(),
+        axis.title.x = element_blank(),
+        axis.ticks.x = element_blank())
+
+g3<-ggplot(metabolic_death, aes(x=year, y=death_rate, group=sex:age))+
+  geom_line(aes(color=sex),show.legend = FALSE)+
+  geom_point(aes(shape=age),size=1,show.legend = FALSE)+
+  labs(title='Death due to Metabolic Risk by Age & Sex',y = "Death Rate\n per 100k") +
+  theme(axis.text.x = element_text(angle = 90))
+
+g1 + g2 + g3 + plot_layout(ncol=1)
+```
+
+For this plot, we again pay attention to the three main risk categories. But this time, we focus on people of different sex and age because the cancers that men and women have are very different. First we can see that for babies and kids (age 0 to 14), the death rate of all the risks are 0. That makes sense since kids and babies are very unlikely to have cancer. Even if they have, they have a longer year of life with disability and are extremely unlikely to die before 14 years old. And the same situation holds for teenagers and people of prime. It shows that cancer favors older people.  
+
+For age group form 50 to 74 years old, we now can see some variations among male and female and risks. For metabolic risk, the death rates of male and female are almost the same with males' slightly higher. As for environmental risk, women's death rate is very close to 0 while men's death rate is a little more significantly higher. For behavioral risk, the difference between men and women is even more significant.
+
+And this kind of gap is even more obvious among 75 plus elders. Except for metabolic risk where the death rate of both mean are women are much higher than other age groups, death rate of elder women is almost the same as that of 50 to 74 age group, but death rate of elder men is dramatically higher. It indicate that among elders, cancer favors elder men. So men should be more careful about these risks, especially behavioral risk, to reduce their probability of getting cancer, for example, they should think of quit smoking, each more vegeables, and drink less alcohol.
+
+Over the 30 years, environmental risks has always been the leading role of causing cancer, death rate came from metabolic risk increases, while death rate came from environmental risk and behavioral risk started to decrease since 2008. These results all further confirm the conclusion I got from the previous plots.
+
+
+
 
 ## question 2
 ```{r}

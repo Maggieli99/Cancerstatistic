@@ -9,7 +9,7 @@ library(dplyr)
 
 All of our datasets generated from GBD results tool need to be pre-processed as they are not in a tidy format originally. Please go to our [github repo chapter](https://github.com/Maggieli99/Cancerstatistic/blob/main/03-cleaning.Rmd) to see code in detail.
 
-## The Effect of Genetic Factors on Cancer
+## The Effect of External Factors on Cancer
 
 For the risk data, we first removed the used columns "location", "upper" and "lower". And then we pivoted our dataset so that the combinations of *measure* and *metric* became new columns (variables) in the wider tidy data and values in *val* were placed in the corresponding entries. We also updated the columns names of our new data frame so that these names are more precise. Finally, noticed that all of our columns of character type have limited number of categories, we transformed all character columns into factors.
 
@@ -61,6 +61,7 @@ country = country %>%
   gather(Year,Number,c(X1990,X1995,X2000,X2005,X2010,X2015,X2019))
 country = country %>%
   spread(Indicator.Name,Number)
+
 country = country %>% mutate(Year=recode(Year, 
                          'X1990'="1990",
                          'X1995'="1995",'X2000'="2000",'X2005'="2005",'X2010'="2010",'X2015'="2015",'X2019'="2019"))
@@ -84,6 +85,14 @@ data = data[-c(1)]
 data$year  = as.character(data$year)
 cat(NULL,file="./data/finalData.csv")
 write_csv(data,'./data/finalData.csv')
+
+cancer = read.csv(file = './data/finalData.csv',header = TRUE)
+cancer = cancer %>% select(c(year,Rate,location)) %>%
+  spread(year,Rate)
+cat(NULL,file="./data/interactive.csv")
+write_csv(cancer,'./data/interactive.csv')
+
+
 ```
 
 

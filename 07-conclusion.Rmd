@@ -1,2 +1,18 @@
 # Conclusion
 
+## Lessons
+
+In this project, we have explore the cancer data in several interesting aspects: risks, country development, and progress. Based on our findings, we learned a lot about cancer and got the answers to our proposed questions at the very beginning. 
+
+The relative contribution of genetic factors versus external factors has always been a dominant topic within cancer research. By analyzing the share of cancer deaths attributed to risk factors, we found that for around 1/3 of the cancer types, the share of death due to external factors are more than 50%. Risk factors contains 3 main categories: behavioral risk, environmental/occupational risk, and metabolic risk. Among these risk types, behavioral risk is at the leading position of causing deaths from cancer. And the biggest portion of behavioral risks is tobacco. We also found out that cancer favors elder men. And it is naturally connected with a deduction that elder men have high death rate from cancer because some behaviors like smoking, drinking, and been crapulent.
+
+Over the 30 years, the life quality of people keeps improving which leads to a lower ratio of cancer death due to behavioral risk. But at the same time, people are also able to eat better and eat a lot more high-calorie and high-sweet food, which leads to higher ratio of cancer death attributed to metabolic problem such as high body-mass index and high fasting plasma glucose. So nowadays, good life style and healthy eating habit might be the best way of preventing having cancers.
+
+## Limitations
+
+The variables in our dataset is a little bit limited
+
+
+## Further Direction
+
+If we would like to further improve our project, we would like to get data set on survival rate to better analyze the progress human has made against cancer.

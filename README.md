@@ -8,7 +8,7 @@ Human beings have been fighting against cancer for several centuries and are sti
 
 In this projeect, three questions that we would like to persue are as follows:
 
-- 1. By how much is all kinds of cancer caused by genetic factors?
+- 1. By how much is all kinds of cancer caused by external factors?
 - 2. What is the relationship between cancer survival rate and level of development (population, GDP, income, inequality, and so on) of a country?
 - 3. How does the world make propress against cancer over time?
 

@@ -1,6 +1,6 @@
 # Missing values
 
-## question 1
+## The Effect of External Factors on Cancer
 
 ```{r}
 library(readr)
@@ -88,7 +88,7 @@ plot_missing <- function(df, percent=FALSE) {
 }
 ```
 
-The original risk data frame does not have any missing values since GBD Results Tool has already ignored all the observations with missing value. So I get another smaller dataset to get another perspective of missing value.
+The original risk data frame does not have any missing values since GBD Results Tool has already ignored all the observations with missing value. 
 
 ```{r}
 names(cancer_risk)<-abbreviate(names(cancer_risk), minlength = 4)
