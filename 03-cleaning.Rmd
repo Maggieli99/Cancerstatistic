@@ -9,7 +9,7 @@ library(dplyr)
 
 All of our datasets generated from GBD results tool need to be pre-processed as they are not in a tidy format originally. Please go to our [github repo chapter](https://github.com/Maggieli99/Cancerstatistic/blob/main/03-cleaning.Rmd) to see code in detail.
 
-## The Effect of Genetic Factors on Cancer
+## The Effect of External Factors on Cancer
 
 For the risk data, we first removed the used columns "location", "upper" and "lower". And then we pivoted our dataset so that the combinations of *measure* and *metric* became new columns (variables) in the wider tidy data and values in *val* were placed in the corresponding entries. We also updated the columns names of our new data frame so that these names are more precise. Finally, noticed that all of our columns of character type have limited number of categories, we transformed all character columns into factors.
 
@@ -103,7 +103,7 @@ write_csv(cancer,'./data/interactive.csv')
 
 ## question 3
 
-For the making_progress data, we need to do the similar step with risk data, that is, we first removed the used columns "location", "upper" and "lower". And then we pivoted our dataset so that the combinations of *measure* and *metric* became new columns (variables) in the wider tidy data and values in *val* were placed in the corresponding entries. To be more precise and clear, we need to change the column name for the metric. Last but not least, we still need to transform all character columns into factors.
+For the making_progress data, we need to do the similar step with risk data, that is, we first removed the used columns "location", "upper" and "lower","sex", since what we need to show is a global trend for both female and male. And then we pivoted our dataset so that the combinations of *measure* and *metric* became new columns (variables) in the wider tidy data and values in *val* were placed in the corresponding entries. To be more precise and clear, we need to change the column name for the metric. 
 
 ```{r}
 cancer_making_progress <- read_csv("./data/making_progess.csv")
@@ -117,8 +117,27 @@ library(tidyr)
 library(highcharter)
 # clean and pivot dataset
 cancer_making_progress <- cancer_making_progress %>% 
-  select(-c('location', 'upper', 'lower')) %>%
+  select(-c('location', 'upper', 'lower', 'sex')) %>%
   pivot_wider(names_from = c(measure, metric), values_from = val) 
 
-names(cancer_making_progress)[c(5, 7:9)]<-c('DALYs_Rate', 'YLLs_Rate', 'YLDs_Percent', 'YLDs_Rate')
+```
+
+```{r}
+names(cancer_making_progress)[c(4, 6,7,8)]<-c('DALYs_Rate', 'YLLs_Rate', 'YLDs_Percent', 'YLDs_Rate')
+```
+
+```{r}
+cmp<- read_csv("./data/death_number.csv")
+cmp <- cmp %>% 
+  select(-c('location', 'upper', 'lower', 'sex')) %>%
+  pivot_wider(names_from = c(measure, metric), values_from = val) 
+
+```
+
+```{r}
+str(cancer_making_progress)
+```
+
+```{r}
+str(cmp)
 ```
