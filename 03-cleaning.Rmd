@@ -90,7 +90,7 @@ cancer = read.csv(file = './data/finalData.csv',header = TRUE)
 cancer = cancer %>% select(c(year,Rate,location)) %>%
   spread(year,Rate)
 cat(NULL,file="./data/interactive.csv")
-write_csv(data,'./data/interactive.csv')
+write_csv(cancer,'./data/interactive.csv')
 
 
 ```
