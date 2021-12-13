@@ -42,26 +42,57 @@ str(cancer_risk)
 
 ## question 2
 ```{r}
-cancer = read.csv(file = './data/cancer.csv',header = TRUE)
+cancer = read.csv(file = './data/final.csv',header = TRUE)
 cancer = cancer %>%
-  select(-c('sex','age','upper','lower','cause')) %>%
-  filter(cancer$year != '2000')
+  select(-c('sex','age','upper','lower','cause')) 
+
+##filter(cancer$year != '2000')
 cancer = filter(cancer,cancer$measure == 'Deaths')
-cancer = filter(cancer, cancer$location != 'India')
+##cancer = filter(cancer, cancer$location != 'India')
 cancer
-country = read.csv(file = './data/country.csv',header = TRUE)
-country = country[which(country$Indicator.Code %in% c('NY.GNP.MKTP.PP.CD','NY.GDP.PCAP.KN')),]
-country = country %>%
-  select(c('Country.Name','Indicator.Name','X1990','X2019'))
+country = read.csv(file = './data/allCountry.csv',header = TRUE)
+country
+country = country[which(country$Indicator.Code %in% c('NY.GNP.MKTP.PP.CD','NY.GDP.PCAP.PP.CD','SH.XPD.CHEX.PC.CD','SH.XPD.CHEX.GD.ZS')),]
 country
 country = country %>%
-  gather(Year,Number,c(X1990,X2019))
+  select(c('Country.Name','Indicator.Name','X1990','X1995','X2000','X2005','X2010','X2015','X2019'))
 country
+country = country %>%
+  gather(Year,Number,c(X1990,X1995,X2000,X2005,X2010,X2015,X2019))
 country = country %>%
   spread(Indicator.Name,Number)
+
 country = country %>% mutate(Year=recode(Year, 
                          'X1990'="1990",
-                         'X2019'="2019"))
+                         'X1995'="1995",'X2000'="2000",'X2005'="2005",'X2010'="2010",'X2015'="2015",'X2019'="2019"))
+country
+colnames(country) = c('country','year','Health_Cost_of_GDP','Health_Cost','GDP','GNI')
+country$year = as.factor(country$year)
+cancer$year = as.factor(cancer$year)
+cancer$location = as.factor(cancer$location)
+country$country = as.factor(country$country)
+levels(cancer$location)[levels(cancer$location)=="United States of America"] <- "United States of America"
+levels(country$country)[levels(country$country)=="United States"] <- "United States of America"
+levels(cancer$location)[levels(cancer$location)=="Australasia"] <- "Australia"
+levels(country$country)[levels(country$country)=="Egypt, Arab Rep."] <- "Egypt"
+levels(country$country)[levels(country$country)=="Congo, Rep."] <- "Congo"
+levels(country$country)[levels(country$country)=="Iran, Islamic Rep."] <- "Iran"
+levels(cancer$location)[levels(cancer$location)=="Iran (Islamic Republic of)"] <- "Iran"
+data = full_join(cancer,country, by = c('location' = 'country','year' = 'year'))
+data = data %>%
+  spread(metric,val)
+data = data[-c(1)]
+data$year  = as.character(data$year)
+cat(NULL,file="./data/finalData.csv")
+write_csv(data,'./data/finalData.csv')
+
+cancer = read.csv(file = './data/finalData.csv',header = TRUE)
+cancer = cancer %>% select(c(year,Rate,location)) %>%
+  spread(year,Rate)
+cat(NULL,file="./data/interactive.csv")
+write_csv(cancer,'./data/interactive.csv')
+
+
 ```
 
 
@@ -75,6 +106,11 @@ cancer_making_progress <- read_csv("./data/making_progess.csv")
 ```
 
 ```{r}
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+library(tidyr)
+library(highcharter)
 # clean and pivot dataset
 cancer_making_progress <- cancer_making_progress %>% 
   select(-c('location', 'upper', 'lower')) %>%
