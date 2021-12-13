@@ -45,8 +45,15 @@ knitr::kable(risk_desription[1:11, ], caption="Risk Data Desription", row.names=
 
 
 ## question 2
-
-
+The dataset is combined with GBD results and the country dataset from World Bank.
+```{r}
+country_data<- readr::read_csv(here::here("./data/data_description.csv"))
+knitr::kable(country_data[c(2,8,12,13,14,15,16,17,18), ], caption="Death among Countries Desription", row.names=FALSE, font_size=10)
+```
+**Issues with this dataset: **
+1.There are only 19 countries in the dataset, and we may include more data inside the dataset. 
+2.We only sample  from 1990 to 2019 to compare the country. 
+3.The dataset are not large enough to shoow the main trend and death are affected by mutiple reasons so it is hard to analyze.
 
 ## question 3
 
