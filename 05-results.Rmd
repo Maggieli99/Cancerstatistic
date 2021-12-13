@@ -113,4 +113,149 @@ ggarrange(plot_2000,plot_2005,plot_2010,plot_2015,
           ncol = 1, nrow = 4)
 ```
 
-## question 3
+## Is the World Making Progress against Cancers?
+### Age-standardized cancer death rates
+
+```{r}
+cause_type <- c("Stomach cancer", "Breast cancer", "Liver cancer", "Tracheal, bronchus, and lung cancer", "Nasopharynx cancer", "Esophageal cancer", "Kidney cancer", "Mesothelioma")
+cancer_making_progress1 <- cancer_making_progress[,c(2,3,5)] %>% 
+  filter(cause %in% cause_type) %>%
+  group_by(cause, year)%>%  
+  mutate(Death_rate=first(Deaths_Rate))%>% 
+  summarise(Death_rate=first(Deaths_Rate))
+```  
+
+
+```{r}
+ggplot(data = cancer_making_progress1, aes(x=year,y=Death_rate, group =cause ,color=cause,shape=cause))+
+  geom_point()+
+  geom_line()+
+  xlab("Year")+ 
+  ylab("Deaths Rate")+
+  ggtitle("The Death Rate from 1990 to 2019 by Cancer Type")+
+  theme_bw() +
+  theme(panel.grid.major=element_line(colour=NA),
+        panel.background = element_rect(fill = "transparent",colour = NA),
+        plot.background = element_rect(fill = "transparent",colour = NA),
+        panel.grid.minor = element_blank(),
+       legend.key.size = unit(2, 'mm'),
+       axis.text.x = element_text(angle=90),
+        legend.box.background = element_rect(color="black"))+
+  scale_x_continuous(limits = c(1990,2019),breaks = seq(1990,2019,1))
+
+
+```
+We randomly chose eight common cancers in our life to watch how their death_rate change in thirty years. We cannot only look at absolute death numbers to see if we've made success in the fight against cancer. It doesn't explain the world's population expansion. Hence, health statisticians investigate death rate, which calculates the number of cancer deaths per 100,000 individuals. It is conspicuous that the death rate shows a decreasing trend in those 30 years especially for Liver cancer, Esophageal cancer, stomach cancer and Tracheal, bronchus and lung cancer. Moreover, this measure is based on Age-Standardized rate, which tells us what the death rate will be if the age structure of the population remains unchanged over time. Hence, we can say the world is making slow progress. Most deaths are caused by smoking since we can observe Tracheal, bronchus and lung cancer contributes to the highest death rate globally. Here is a strong decline of death rates for lunger cancer since smoking rate is decreasing in these years.
+
+
+
+
+### The number of cancer deaths is increasing 
+```{r}
+library(ggthemes)
+cause_type <- c("Stomach cancer", "Breast cancer", "Liver cancer", "Tracheal, bronchus, and lung cancer", "Nasopharynx cancer", "Esophageal cancer", "Kidney cancer", "Mesothelioma")
+cancer_making_p <- cmp[,c(2,3,4)] %>% 
+  filter(cause %in% cause_type) %>%
+  group_by(cause, year)%>% 
+  mutate(Death_numbers=first(Deaths_Number))%>% 
+  summarise(Death_numbers=first(Deaths_Number))
+```
+```{r}
+options(scipen=200)
+ggplot(cancer_making_p,aes(year,Death_numbers,fill=cause))+
+geom_area(position="stack")+
+ggtitle("Number of Cancer Deaths by Type from 1990 to 2019")+
+#theme_economist()+
+scale_fill_economist()+
+guides(fill=guide_legend(title=NULL)) +
+theme( panel.grid.major=element_line(colour=NA),
+        plot.background = element_rect(fill = "transparent",colour = NA),
+  legend.text = element_text(size=8), axis.text.x = element_text(angle=90))+
+scale_x_continuous(limits = c(1990,2019),breaks = seq(1990,2019,1))
+```
+The number of cancer deaths grew from roughly about 3 million in 1990 to 5 million in 2019 for those eight random cancers, as indicated in the graph.
+There are two causes for this, as we've just seen: The first is that the global population is growing, which is followed by an increase in the annual death toll.
+The second major reason is that the world has made significant progress in decreasing causes of mortality that used to kill individuals young, particularly infectious illnesses.This indicates that the world's population is aging, and an increasing number of individuals are dying of cancer and other causes.
+We may predict a rise in the number of individuals dying early as the globe grows wealthier.
+
+
+
+```{r}
+cause_type <- c("Stomach cancer", "Breast cancer", "Liver cancer", "Tracheal, bronchus, and lung cancer", "Nasopharynx cancer", "Esophageal cancer", "Kidney cancer", "Mesothelioma")
+cmp2 <- cancer_making_progress[,c(2,3,6)] %>% 
+  filter(cause %in% cause_type) %>%
+  group_by(cause,year) %>% 
+mutate(Year_of_Life_Lost=first(YLLs_Rate))%>% 
+summarise(Year_of_Life_Lost=first(YLLs_Rate))
+```
+
+
+```{r}
+series <- cmp2 %>% 
+  group_by(cause) %>% 
+  do(item = list(
+    cause = first(.$cause),
+    sequence = .$Year_of_Life_Lost,
+    value = first(.$Year_of_Life_Lost)
+  )) %>% 
+  .$item
+
+series <- series[order(sapply(series,"[[",3),decreasing = TRUE)]
+```
+
+
+```{r}
+highchart() %>%
+  hc_title(text = "Changing of Year of Life Lost Rate in 30 years ") %>%
+  #hc_chart(data = series, type="bar", hcaes(y = sequence, color = cause)) %>%
+  hc_add_series(data = series, type="bar") %>% 
+  hc_legend(layout = "vertical",
+            align = "right",
+            title = list(text = 'Rate'),
+            verticalAlign = "top") %>%
+  hc_motion(
+    enabled = TRUE,
+    labels = cmp2$year,
+    axisLabel = "year",
+    #series = c(0,1),
+    autoplay=TRUE
+  ) %>%
+  hc_yAxis(title = list(text = "Year of Life Lost Rate")) %>%
+  hc_xAxis(title = list(text = "Cancer Type")) %>%
+  hc_xAxis(categories = sapply(series,"[[",1)) %>%
+  hc_yAxis(min = 0, max = 700)%>%
+  hc_colorAxis(stops = color_stops(n = 3, colors = c("pink","red","purple")))
+
+```
+
+
+
+
+```{r}
+cause_type <- c("Stomach cancer", "Breast cancer", "Liver cancer", "Tracheal, bronchus, and lung cancer", "Nasopharynx cancer", "Esophageal cancer", "Kidney cancer", "Mesothelioma")
+cmp3 <- cancer_making_progress[,c(2,3,8)] %>% 
+  filter(cause %in% cause_type) %>%
+  group_by(cause,year) %>% 
+mutate(Year_of_Life_with_Disability=first(YLDs_Rate))%>% 
+summarise(Year_of_Life_with_Disability=first(YLDs_Rate))
+```
+
+```{r}
+ggplot(data = cmp3, aes(x=year,y=Year_of_Life_with_Disability, group =cause ,color=cause,shape=cause))+
+  geom_point()+
+  geom_line()+
+  xlab("Year")+ 
+  ylab("Year of Life with Disability")+
+  ggtitle("The Year Living with Disablity from 1990 to 2019")+
+  theme_bw() +
+  theme(panel.grid.major=element_line(colour=NA),
+        panel.background = element_rect(fill = "transparent",colour = NA),
+        plot.background = element_rect(fill = "transparent",colour = NA),
+        panel.grid.minor = element_blank(),
+       legend.key.size = unit(2, 'mm'),
+       axis.text.x = element_text(angle=90),
+        legend.box.background = element_rect(color="black"))+
+  scale_x_continuous(limits = c(1990,2019),breaks = seq(1990,2019,1))
+
+
+```

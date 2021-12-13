@@ -16,6 +16,8 @@ question-3-2
 results
 question-1-1
 question-2-3
-question-3-3
+is-the-world-making-progress-against-cancers
+age-standardized-cancer-death-rates
+the-number-of-cancer-deaths-is-increasing
 interactive-component
 conclusion
