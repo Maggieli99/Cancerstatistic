@@ -10,6 +10,9 @@
 <body>
   <header>
     <h1>Interactive Plot</h1>
+     <h3>Instructions:</h3>
+            <h5>1. Click the buttons to compare death rate in different years</h5>
+            <h5>2. Hover the mouse over a bar to see the exact death rate of a country</h5>
   </header>
 
 
@@ -52,7 +55,7 @@
           .attr("dx","-.8em")
           .attr("dy","-.5em")
 
-          y.domain([0, 500])//d3.max(data, function(d) { return +d[selectedVar] }) ]);
+          y.domain([0, 350])//d3.max(data, function(d) { return +d[selectedVar] }) ]);
           yAxis.call(d3.axisLeft(y));
 
           // create line
