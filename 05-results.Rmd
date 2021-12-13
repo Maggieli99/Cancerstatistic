@@ -3,5 +3,114 @@
 ## question 1
 
 ## question 2
+```{r}
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+library(tidyr)
+library(highcharter)
+library(plotly)
+library(ggpubr)
+```
+
+```{r}
+data = read_csv(file = './data/finalData.csv')
+new_data = data %>% 
+  group_by(location) %>%
+  do(item = list(country = first(.$location),sequence = .$Rate), value = first(.$Rate))%>%
+    .$item
+
+highchart(type = 'map') %>%
+  hc_add_series(data =  new_data,joinBy = c('name','country'),mapData = worldgeojson,  dataLabels = list(enabled = TRUE, format = "{point.properties.postalcode}"))  %>%
+  hc_colorAxis(stops = color_stops(n = 3, colors = c("firebrick2","white","dodgerblue3")))  %>%
+
+  hc_motion(enabled = TRUE,
+    axisLabel = "year",labels =as.character(sort(unique(data$year),decreasing = FALSE)),
+    magnet = list(
+      round = "floor" 
+    ))%>% 
+  hc_legend(layout = "vertical", 
+            align = "right",
+            title = list(text = 'Death Rate')) %>%
+  hc_add_theme(hc_theme_smpl()) %>%
+  hc_exporting(enabled = TRUE)  %>%
+  hc_title(text = "Death Rate In The World From 1990 To 2019")
+
+```
+```{r}
+new_data = data[-which(data$location=='Brazil'),]
+new_data
+new_data = new_data[new_data$year %in% c('2000','2005','2010','2015'),]
+x2000 = new_data[new_data$year=='2000',]
+x2005 = new_data[new_data$year=='2005',]
+x2010 = new_data[new_data$year=='2010',]
+x2015 = new_data[new_data$year=='2015',]
+```
+```{r}
+new_data
+fig <- new_data %>%
+  plot_ly(
+    x = ~Health_Cost_of_GDP, 
+    y = ~Rate, 
+    size = ~GDP, 
+    color = ~Rate,
+    frame = ~year, 
+    text = ~location, 
+    hoverinfo = "text",
+    type = 'scatter',
+    mode = 'markers'
+  )%>% animation_opts(
+    1000, easing = "elastic", redraw = FALSE
+  )
+fig
+```
+```{r}
+library(RColorBrewer)
+COLORS <- RColorBrewer::brewer.pal(6, "Set2")
+try_data = new_data[-which(new_data$location=='China'),]
+try_data %>%
+  hchart('column',hcaes(x = 'location', y = 'Number',group = 'year'),stacking="year") %>%
+  hc_legend(title = list(text = "Year",style=list(fontSize='10px')),
+            align = "right", verticalAlign = "middle",layout = "vertical",floating=FALSE) %>%
+  hc_colors(COLORS)%>%
+  hc_chart(zoomType = "x") %>%
+  hc_xAxis(title = list(text = "Country")) %>%
+  hc_yAxis(title = list(text = 'Accumulated Death'))  %>%
+  hc_subtitle(text = "Click on the legend to show selected years") %>%
+  hc_exporting(enabled = TRUE)
+```
+```{r}
+new_data  =  data %>%
+  mutate(scaled_GDP = GDP/100)
+
+new_data = new_data[-which(new_data$location=='Brazil'),]
+new_data = new_data[new_data$year %in% c('2000','2005','2010','2015'),]
+x2000 = new_data[new_data$year=='2000',]
+x2005 = new_data[new_data$year=='2005',]
+x2010 = new_data[new_data$year=='2010',]
+x2015 = new_data[new_data$year=='2015',]
+x2000
+plot_2000 = ggplot(data = x2000,aes(x = scaled_GDP, y = Rate))+geom_line(colour="#FF9999")+geom_point(colour="#FF9999")+ggtitle("Death Rate by GDP in 2000") +
+  labs(x ="GDP", y ="Death Rate")+
+  theme_grey(10)+
+  theme(plot.title =element_text(face='bold', color ='steelblue2'))
+
+plot_2005 = ggplot(data = x2005,aes(x = scaled_GDP, y = Rate))+geom_line( colour="#E69F00")+geom_point(colour="#E69F00")+ggtitle("Death Rate by GDP in 2005") +
+  labs(x ="GDP", y ="Death Rate")+
+  theme(plot.title =element_text(face='bold', color ='steelblue2'))
+
+plot_2010= ggplot(data = x2010,aes(x = scaled_GDP, y = Rate))+geom_line(colour="#F0E442")+geom_point(colour="#F0E442")+ggtitle("Death Rate by GDP in 2010") +
+  labs(x ="GDP", y ="Death Rate")+
+  theme(plot.title =element_text(face='bold', color ='steelblue2'))
+
+plot_2015 = ggplot(data = x2015,aes(x = scaled_GDP, y = Rate))+geom_line(colour="#CC79A7")+geom_point(colour="#CC79A7")+ggtitle("Death Rate by GDP in 2015") +
+  labs(x ="GDP", y ="Death Rate")+
+  theme(plot.title =element_text(face='bold', color ='steelblue2'))
+
+ggarrange(plot_2000,plot_2005,plot_2010,plot_2015, 
+          label.y = 1,
+          align='hv',
+          ncol = 1, nrow = 4)
+```
 
 ## question 3
