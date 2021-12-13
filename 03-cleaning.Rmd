@@ -40,7 +40,11 @@ After data cleaning and transformation, our *cancer_risk* data frame has much le
 str(cancer_risk)
 ```
 
+
+
 ## question 2
+
+The orginal dataset of countries contains more than 2000 rows of basic information of each countries so here we pick important factors towards to death of rate including GDP, GNI, health cost per capita and health cost percent of total GDP.  Besides, we also spread the measure of cancer death including perceent, rate and number. Here, we also add a year column.  The updated dataset are shown below and is tidy meanwhile.
 ```{r}
 cancer = read.csv(file = './data/final.csv',header = TRUE)
 cancer = cancer %>%
@@ -49,14 +53,13 @@ cancer = cancer %>%
 ##filter(cancer$year != '2000')
 cancer = filter(cancer,cancer$measure == 'Deaths')
 ##cancer = filter(cancer, cancer$location != 'India')
-cancer
 country = read.csv(file = './data/allCountry.csv',header = TRUE)
-country
+
 country = country[which(country$Indicator.Code %in% c('NY.GNP.MKTP.PP.CD','NY.GDP.PCAP.PP.CD','SH.XPD.CHEX.PC.CD','SH.XPD.CHEX.GD.ZS')),]
-country
+
 country = country %>%
   select(c('Country.Name','Indicator.Name','X1990','X1995','X2000','X2005','X2010','X2015','X2019'))
-country
+
 country = country %>%
   gather(Year,Number,c(X1990,X1995,X2000,X2005,X2010,X2015,X2019))
 country = country %>%
@@ -65,7 +68,7 @@ country = country %>%
 country = country %>% mutate(Year=recode(Year, 
                          'X1990'="1990",
                          'X1995'="1995",'X2000'="2000",'X2005'="2005",'X2010'="2010",'X2015'="2015",'X2019'="2019"))
-country
+
 colnames(country) = c('country','year','Health_Cost_of_GDP','Health_Cost','GDP','GNI')
 country$year = as.factor(country$year)
 cancer$year = as.factor(cancer$year)
@@ -89,6 +92,7 @@ write_csv(data,'./data/finalData.csv')
 cancer = read.csv(file = './data/finalData.csv',header = TRUE)
 cancer = cancer %>% select(c(year,Rate,location)) %>%
   spread(year,Rate)
+cancer
 cat(NULL,file="./data/interactive.csv")
 write_csv(cancer,'./data/interactive.csv')
 

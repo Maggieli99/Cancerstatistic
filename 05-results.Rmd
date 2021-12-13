@@ -209,7 +209,8 @@ library(highcharter)
 library(plotly)
 library(ggpubr)
 ```
-
+Heatmap of Death Rate in World
+The heatmap of death rate can show the death rate among the coutries shown in the world map. You can alsoo click the run button and then we also see the death rate change from 1990 to 2019. From 1990 to 2019, the red area where death rate become higher so the color is lighter. However, from 1990 to 2019, the death rate in blue zone where death rate are high become lower when the color are lighter.
 ```{r}
 data = read_csv(file = './data/finalData.csv')
 new_data = data %>% 
@@ -234,9 +235,11 @@ highchart(type = 'map') %>%
   hc_title(text = "Death Rate In The World From 1990 To 2019")
 
 ```
+
+Bubble Plot 
+The bubble plot can show the death rate versus health cost of GDP. The size of bubble can also show the GDP per capita. If you move the mouse over the bubble, we can also see the name of country. The result is interesting: in most cases, higher health cost of GDP means the high death rate and higher GDP. However, America does not follow this rule: America have high health cost of GDP but the death only in the middle level. The rules are followed across the years. 
 ```{r}
 new_data = data[-which(data$location=='Brazil'),]
-new_data
 new_data = new_data[new_data$year %in% c('2000','2005','2010','2015'),]
 x2000 = new_data[new_data$year=='2000',]
 x2005 = new_data[new_data$year=='2005',]
@@ -261,11 +264,14 @@ fig <- new_data %>%
   )
 fig
 ```
+Accumulated Death Among Countries
+
+In this plot, I stacked the total amount of death from 2000 to 2015. Here, it is easy to see that China has much larger amout of death than other countries. The death amount is hugely depend on the population of each countries, so many countries with small poplution has small death amount and  countries with large population has large death amount. Interestingly, even though India and US has large population, the death amount  is still much smaller than China. 
 ```{r}
 library(RColorBrewer)
 COLORS <- RColorBrewer::brewer.pal(6, "Set2")
-try_data = new_data[-which(new_data$location=='China'),]
-try_data %>%
+
+new_data %>%
   hchart('column',hcaes(x = 'location', y = 'Number',group = 'year'),stacking="year") %>%
   hc_legend(title = list(text = "Year",style=list(fontSize='10px')),
             align = "right", verticalAlign = "middle",layout = "vertical",floating=FALSE) %>%
@@ -276,6 +282,9 @@ try_data %>%
   hc_subtitle(text = "Click on the legend to show selected years") %>%
   hc_exporting(enabled = TRUE)
 ```
+Death Rate by GDP
+Here, I combie four plots of deeath rate by GDP from 2000 to 2015. In this plot, I only try to explore the death rate affected by GDP. The four plots show that the trend are not changed from 2000 to 2019: high GDP means high death rate. Even though high GDP mean high income and better living condtion, it does not mean the death rate are lower. In highly developed countries, there are still many factors that can affect people's health and cancer is still a big threathen to developed countries. 
+
 ```{r}
 new_data  =  data %>%
   mutate(scaled_GDP = GDP/100)
@@ -286,7 +295,6 @@ x2000 = new_data[new_data$year=='2000',]
 x2005 = new_data[new_data$year=='2005',]
 x2010 = new_data[new_data$year=='2010',]
 x2015 = new_data[new_data$year=='2015',]
-x2000
 plot_2000 = ggplot(data = x2000,aes(x = scaled_GDP, y = Rate))+geom_line(colour="#FF9999")+geom_point(colour="#FF9999")+ggtitle("Death Rate by GDP in 2000") +
   labs(x ="GDP", y ="Death Rate")+
   theme_grey(10)+

@@ -236,4 +236,10 @@ Nasopharynx cancer and larynx cancer have same missing pattern. Other pharynx ca
 
 ## question 2
 
+The data set that contains the death rate and number among coutries cointain null variable Brazil. Besides, the health cost of GDP and health cost per capita contains many null data from 1995 t0 2015.  Here the missing plot can also show the fact that missing data are concentrated at health cost. The misssing data of  GDP and GNI are coused by Brazil in 2019.
+```{r}
+data = read_csv("./data/finalData.csv")
+plot_missing(data)
+```
+
 ## question 3

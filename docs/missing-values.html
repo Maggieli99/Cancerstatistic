@@ -184,10 +184,28 @@
             <section class="normal" id="section-">
 <div id="missing-values" class="section level1" number="4">
 <h1><span class="header-section-number">Chapter 4</span> Missing values</h1>
+<<<<<<< HEAD
 <div id="the-effect-of-external-factors-on-cancer-2" class="section level2" number="4.1">
 <h2><span class="header-section-number">4.1</span> The Effect of External Factors on Cancer</h2>
 <p>The original risk data frame does not have any missing values since GBD Results Tool has already ignored all the observations with missing value.</p>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+=======
+<<<<<<< HEAD
+<div id="question-1" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> question 1</h2>
+<p>The original risk data frame does not have any missing values since GBD Results Tool has already ignored all the observations with missing value. So I get another smaller dataset to get another perspective of missing value.</p>
+<<<<<<< HEAD
+<p><img src="finalproj_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+=======
+<p><img src="finalproj_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+=======
+<div id="the-effect-of-external-factors-on-cancer-2" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> The Effect of External Factors on Cancer</h2>
+<p>The original risk data frame does not have any missing values since GBD Results Tool has already ignored all the observations with missing value.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+>>>>>>> 70cc324435fc0e2230a16d32a405a93c475ef134
+>>>>>>> 5550c8f20168aa14702cee840fa89a725ce42daa
+>>>>>>> d5558b11c8711015791f486c42c6228350d430e4
 <p>So I get another smaller dataset to get another perspective of missing value and the dataset is as follows:</p>
 <pre><code>## # A tibble: 6 × 11
 ##   measure location sex   age      cause    rei    metric  year   val upper lower
@@ -243,19 +261,29 @@
 ## Bladder cancer                            NA</code></pre>
 <p>After transformation, we get a new data frame. Each observation is the death rates of one kind of cancer caused by different external risks. There is a lot of missing values in our dataset because not all types of cancer are related to all kinds of risks. For example, some types of cancer may be induced by air pollution, but will not be induced by alcohol use.</p>
 <p>In order to see the relationship between cancer types and external risks, we analyze the missing values in this data frame below.</p>
+<<<<<<< HEAD
+<p><img src="finalproj_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+=======
 <p><img src="finalproj_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+>>>>>>> 5550c8f20168aa14702cee840fa89a725ce42daa
 <p>From the missing pattern plot we can see that for each of the risks air pollution, drug use, other environmental risks, unsafe sex and low physical activity, their values are missing for all other types of cancer except one. That means theses risks are highly correlated to one specific kind of cancer and people need to be care of those risks if they would like to avoid the specific types of cancer.</p>
 <p>We can also see that if data is missing for risk air pollution, then it is likely to be missing in for other environmental risks. It makes sense since air pollution is also one kind of environmental risk. It is chosen to be a separated variable because it accounts for a large proportion of environmental risks.</p>
 <p>Another thing of our notice is that risk tobacco is almost not missing for all kinds of cancer, which means it can be the induction of the majority types of cancer. So in order to protect ourselves from being attacked by cancer, we should try to avoid use tobacco a lot.</p>
 <p>We do not have a complete case here because no type of cancer would be induced by all the external risks.</p>
 <p>Below, by explicitly drawing missing values in each observation, we can have a better understanding of similarities in different kinds of cancer.</p>
+<<<<<<< HEAD
+<p><img src="finalproj_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+=======
 <p><img src="finalproj_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+>>>>>>> 5550c8f20168aa14702cee840fa89a725ce42daa
 <p>From the plot above, tracheal, bronchus, and lung cancer is affected by external risks the most since it can be induced by majority of the risks listed. It also has the highest death rate because we can see many of the blocks are yellow which means the rate is very high.</p>
 <p>Uterine cancer, thyroid cancer and gallbladder and biliary tract cancer have the same missing pattern. Colon and rectum cancer and breast cancer have same missing pattern. It suggests that there might be some similarity in these kinds of cancer, though not obvious now, but may help people find treatment to these types of cancer.</p>
 <p>Nasopharynx cancer and larynx cancer have same missing pattern. Other pharynx cancer and lip and oral cavity cancer have same missing pattern. And these two missing patterns are also similar to each other. It makes sense since they are all related to throat.</p>
 </div>
 <div id="question-2-2" class="section level2" number="4.2">
 <h2><span class="header-section-number">4.2</span> question 2</h2>
+<p>The data set that contains the death rate and number among coutries cointain null variable Brazil. Besides, the health cost of GDP and health cost per capita contains many null data from 1995 t0 2015. Here the missing plot can also show the fact that missing data are concentrated at health cost. The misssing data of GDP and GNI are coused by Brazil in 2019.
+<img src="finalproj_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 </div>
 <div id="question-3-2" class="section level2" number="4.3">
 <h2><span class="header-section-number">4.3</span> question 3</h2>
