@@ -65,7 +65,7 @@ highchart() %>%
 
 The plot above shows an estimation of share of global cancer deaths which are attributed to external risk factors over the 30 years. For example, around 71% of larynx cancer deaths are attributed to some external risk. Only the remaining 29% of deaths are assumed to have no attribution to risk factors, and would occur naturally in the absence of external factors. So, we can see that the cancers with blue bar, like cervical cancer and mesothelioma, are more caused by external risks; the cancers with red bar, like thyroid cancer and ovarian cancer, are more due to genetic factors and so that people can do less to prevent such cancers. 
 
-We can notice that cervical cancer is 100% due to external risks according to the plot. It might be to extreme to say but it is a suggestion that people can definitely do a lot of things to successfully prevent having such cancer.
+We can notice that cervical cancer is 100% due to external risks according to the plot. It might be too extreme to say but it is a suggestion that people can definitely do a lot of things to successfully prevent having such cancer.
 
 We also observe that over the past 30 years, though the overall share of cancer deaths due to external risks is not changing dramatically, the external risk attribution does have some changes for some kind of cancer. For instance, esophageal cancer is less and less due to external risks. This may be because the food people nowadays are more various and cleaner and people take drinking water more seriously than before. So people are having less chancing getting esophageal cancer due to lack of vegetable eating and water drinking. On the contrary, liver cancer are more and more due to external risks. This may have relation with the constantly increasing smoke rate of human.
 
@@ -356,13 +356,21 @@ ggplot(data = cancer_making_progress1, aes(x=year,y=Death_rate, group =cause ,co
 
 ```
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> e42e1e47d31c6491440d2f26d9d2727eb4744d4b
 We randomly chose eight common cancers in our life to watch how their death_rate change in thirty years. We cannot only look at absolute death numbers to see if we've made success in the fight against cancer. It doesn't explain the world's population expansion. Hence, health statisticians investigate death rate, which calculates the number of cancer deaths per 100,000 individuals. It is conspicuous that the death rate shows a decreasing trend in those 30 years especially for Liver cancer, Esophageal cancer, stomach cancer and Tracheal, bronchus and lung cancer. Moreover, this measure is based on Age-Standardized rate, which tells us what the death rate will be if the age structure of the population remains unchanged over time. Hence, we can say the world is making slow progress. Most deaths are caused by smoking since we can observe Tracheal, bronchus and lung cancer contributes to the highest death rate globally. Here is a strong decline of death rates for lunger cancer since smoking rate is decreasing in these years.
 
 
 
 
+<<<<<<< HEAD
 ### The number of cancer deaths is increasing 
 
+=======
+### The number of cancer deaths is increasing for all age
+>>>>>>> e42e1e47d31c6491440d2f26d9d2727eb4744d4b
 ```{r}
 library(ggthemes)
 cause_type <- c("Stomach cancer", "Breast cancer", "Liver cancer", "Tracheal, bronchus, and lung cancer", "Nasopharynx cancer", "Esophageal cancer", "Kidney cancer", "Mesothelioma")
@@ -386,6 +394,7 @@ theme( panel.grid.major=element_line(colour=NA),
   legend.text = element_text(size=8), axis.text.x = element_text(angle=90))+
 scale_x_continuous(limits = c(1990,2019),breaks = seq(1990,2019,1))
 ```
+<<<<<<< HEAD
 
 The number of cancer deaths grew from roughly about 3 million in 1990 to 5 million in 2019 for those eight random cancers, as indicated in the graph.
 
@@ -394,9 +403,18 @@ There are two causes for this, as we've just seen: The first is that the global 
 The second major reason is that the world has made significant progress in decreasing causes of mortality that used to kill individuals young, particularly infectious illnesses.This indicates that the world's population is aging, and an increasing number of individuals are dying of cancer and other causes.
 
 We may predict a rise in the number of individuals dying early as the globe grows wealthier.
+=======
+>>>>>>> e42e1e47d31c6491440d2f26d9d2727eb4744d4b
+
+
+The number of cancer deaths grew from roughly about 3 million in 1990 to 5 million in 2019 for those eight random cancers, as indicated in the graph. Evidently, tracheal, bronchus, and lung cancer contributes most to the death numbers for "All age". As we discussed before, it also plays an critical role in age-standardized death rate. Stomach cancer is the second big reason that lead to the death globally. Mesothelioma is the least cancer that result in death. 
+From what the figure shown, we found there is a obvious increase in death number. There are two causes for this the first is that the global population is growing, which is followed by an increase in the annual death toll.
+The second major reason is that the world has made significant progress in decreasing causes of death that can be detected at an individual's young age. Since the development of technology such as the creation of advanced instruments and the doctor's outstanding medical skills, some disease may not develop to cancer. However, there is still an increase in death number; that is, the population of the world is aging and this means when people are getting old, they will die because of cancer. Also, this reason is a natural occurrences when people getting old. 
+Also, we can predict that the death number would continuously increase since diseases may not transfer to cancer because of the prevention by advanced medical technology.
 
 
 
+### Year of life lost rate is decreasing.
 ```{r}
 cause_type <- c("Stomach cancer", "Breast cancer", "Liver cancer", "Tracheal, bronchus, and lung cancer", "Nasopharynx cancer", "Esophageal cancer", "Kidney cancer", "Mesothelioma")
 cmp2 <- cancer_making_progress[,c(2,3,6)] %>% 
@@ -423,13 +441,10 @@ series <- series[order(sapply(series,"[[",3),decreasing = TRUE)]
 
 ```{r}
 highchart() %>%
-  hc_title(text = "Changing of Year of Life Lost Rate in 30 years ") %>%
+  hc_title(text = "Year of Life Lost Rate in 30 years ") %>%
   #hc_chart(data = series, type="bar", hcaes(y = sequence, color = cause)) %>%
   hc_add_series(data = series, type="bar") %>% 
-  hc_legend(layout = "vertical",
-            align = "right",
-            title = list(text = 'Rate'),
-            verticalAlign = "top") %>%
+  hc_legend(align = "right") %>%
   hc_motion(
     enabled = TRUE,
     labels = cmp2$year,
@@ -446,6 +461,15 @@ highchart() %>%
 ```
 
 
+<<<<<<< HEAD
+=======
+The plot above shows an estimation on cancer patients' years of life lost rate from 1990 to 2019 based on eight random cancers. By dragging the time line, we can easily find that there is a big decrease of the year of life lost rate. Also, the rate is calculated by adding the year of life lost rate for 100k people that got this cancer. The decrease in year of life lost rate means people who got thee cancer can live longer than that 30 years before. As we can seen the purple line which is the year of life lost rate for people who got tracheal, bronchus, and lung cancer decrease from 651 to 544, that is decreased by 16.4%. What's more the most red line which represents the year of life lost rate for people who got stomach cancer decrease from 487 to 264, which is decreased by 46%. This is a huge change. I believe the reason leads to the huge change must rely on the world's making progress. For example, patients can be treated at once. People get richer and they can afford the fee to do the operations if they were detected early-stage cancer.
+
+
+
+
+### The tend of rate of years for who is living with disability is flat or increase a little. 
+>>>>>>> e42e1e47d31c6491440d2f26d9d2727eb4744d4b
 ```{r}
 cause_type <- c("Stomach cancer", "Breast cancer", "Liver cancer", "Tracheal, bronchus, and lung cancer", "Nasopharynx cancer", "Esophageal cancer", "Kidney cancer", "Mesothelioma")
 cmp3 <- cancer_making_progress[,c(2,3,8)] %>% 
@@ -472,3 +496,9 @@ ggplot(data = cmp3, aes(x=year,y=Year_of_Life_with_Disability, group =cause ,col
         legend.box.background = element_rect(color="black"))+
   scale_x_continuous(limits = c(1990,2019),breaks = seq(1990,2019,1))
 ```
+
+The plot above shows an estimation on cancer patients' years of living with disability from 1990 to 2019 based on eight random cancers. Also, the rate is calculated by adding the year of living with disability rate for 100k people that got this cancer. The red line which represents the breast cancer shows a little bit increase, which means people who lived with breast cancer live longer now than 30 years before. Also, the green one with rectangle shape and the blue one with snow shape increase a little bit as well. They represent people's living year with Kidney cancer and Nasopharynx cancer. However, other line such as the purple one which represents the Stomach cancer surprising is decreasing. The little increase may related to the world progress on the advanced medical equipment as we discussed before. Also, breast cancer usually be detected among women. A good mood and an optimistic attitude is the most factor that can live longer. What's more, the society is more likely to value equality than that before and women plays a more important role in this world which can also be the reason. For the decrease on Stomach cancer, I think the reason is that unhealthy instant food is filled in people's life. Also, keeping staying up late becomes the norm among people. Hence, cancer patients' years of living with these disability a little bit decrease.
+
+
+
+

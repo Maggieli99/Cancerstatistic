@@ -26,7 +26,9 @@ accumulated-death-among-countries
 death-rate-by-gdp
 is-the-world-making-progress-against-cancers
 age-standardized-cancer-death-rates
-the-number-of-cancer-deaths-is-increasing
+the-number-of-cancer-deaths-is-increasing-for-all-age
+year-of-life-lost-rate-is-decreasing.
+the-tend-of-rate-of-years-for-who-is-living-with-disability-is-flat-or-increase-a-little.
 interactive-component
 conclusion
 lessons
