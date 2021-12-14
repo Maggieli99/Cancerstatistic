@@ -53,7 +53,7 @@
 
 <link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
 <script src="libs/proj4js-2.3.15/proj4.js"></script>
 <link href="libs/highcharts-8.1.2/css/motion.css" rel="stylesheet" />
 <script src="libs/highcharts-8.1.2/highcharts.js"></script>
@@ -199,6 +199,11 @@ Interactive Plot
 <h1>
 Interactive Plot
 </h1>
+<h3>
+Instructions:
+</h3>
+<pre><code>    &lt;h5&gt;1. Click the buttons to compare death rate in different years&lt;/h5&gt;
+        &lt;h5&gt;2. Hover the mouse over a bar to see the exact death rate of a country&lt;/h5&gt;</code></pre>
 </header>
 <div id="interaction">
 <button onclick="update('1990')">Year 1990</button>
@@ -237,7 +242,7 @@ Interactive Plot
           .attr("dx","-.8em")
           .attr("dy","-.5em")
 
-          y.domain([0, 500])//d3.max(data, function(d) { return +d[selectedVar] }) ]);
+          y.domain([0, 350])//d3.max(data, function(d) { return +d[selectedVar] }) ]);
           yAxis.call(d3.axisLeft(y));
 
           // create line
