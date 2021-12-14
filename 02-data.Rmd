@@ -24,7 +24,7 @@ World Bank collects and provides large amount of global development data and was
 
 Details about the datasets are as follows:
 
-## The Effect of External Factors on Cancer
+## Data on Cancer by Risk
 
 **Dataset: risk.csv**
 
@@ -44,18 +44,24 @@ knitr::kable(risk_desription[1:11, ], caption="Risk Data Desription", row.names=
 3. The dataset is not tidy. Column "measure" actually contains the variables of our interests. And "val" stores the values of corresponding variable. This dataset needs to be pivot to a tidy format.
 
 
-## question 2
+## Data on Cancer by Country Development
+
+**Dataset: final.csv**
+
 The dataset is combined with GBD results and the country dataset from World Bank.
+
 ```{r}
 country_data<- readr::read_csv(here::here("./data/data_description.csv"))
 knitr::kable(country_data[c(2,8,12,13,14,15,16,17,18), ], caption="Death among Countries Desription", row.names=FALSE, font_size=10)
 ```
-**Issues with this dataset: **
-1.There are only 19 countries in the dataset, and we may include more data inside the dataset. 
-2.We only sample  from 1990 to 2019 to compare the country. 
-3.The dataset are not large enough to shoow the main trend and death are affected by mutiple reasons so it is hard to analyze.
 
-## question 3
+**Issues with this dataset: **
+
+1.There are only 19 countries in the dataset, which may not be supper sufficient for see the whole story on relationship between cancer death rate and country progress. 
+
+3.The dataset are not large enough to show the main trend and death are affected by multiple reasons so the analyze results might include some bias.
+
+## Data on Cancer over Time
 
 **Dataset: making_progress.csv**
 **Dataset: death_number.csv**
@@ -71,6 +77,6 @@ knitr::kable(make_progress_description[1:10,], caption="Making_progress_descript
 
 1. Same as our topic 1, the column "location" only has one value "Global" which cannot provide more information. And the columns "upper" and "lower" give a boundaries to "val". However, we only used the "val" provided and not consider the range of "val". Also, the the column "sex" cares about both female and male. Hence, the unused columns need to be removed.
 
-2. Considering that the dataset size need to be reduced, we may delete some meaningless and confusing metrics.
+2. Considering that the dataset size need to be reduced, we may delete some meaningless and confusing metrics such as "YLLs percent" and "YLDs percent".
 
-3. Here are three different "measure" way in our dataset, which we need to do tidy work to make them readable and clear, so this is the reason that why there are two datasets that definitely have same data description. The only difference is the classification of the column "age".
+3. Since it take too long to download the whole dataset for different countries over 30 years. We downloaded two separated dataset with different "measure" and "age" group. That is why the two datasets have exactly the same data description.

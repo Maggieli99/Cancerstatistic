@@ -1,7 +1,5 @@
 # Missing values
 
-## The Effect of External Factors on Cancer
-
 ```{r}
 library(readr)
 library(tidyverse)
@@ -10,6 +8,8 @@ library(dplyr)
 library(ggplot2)
 library(patchwork)
 ```
+
+## Cancer Risk Dataset
 
 ```{r}
 plot_missing <- function(df, percent=FALSE) {
@@ -104,7 +104,6 @@ head(cancerdata)
 
 Our original dataset is downloaded from the source https://ghdx.healthdata.org/. It shows the information about in the global scale in 2019, the death rates of each kind of cancer caused by different external risks for all ages. We can see that the dataset is not in a tidy format. There are many useless variables that only contains one value. So below we transformed the data into a tidy format using only the variables of our interests.
 
-
 ```{r}
 newdata <- cancerdata[,c("cause", "rei", "val")]
 names(newdata) <- c("type", "risk", "death_rate")
@@ -114,86 +113,10 @@ tidydata <- newdata %>%
   column_to_rownames(var="type")
 head(tidydata)
 ```
+
 After transformation, we get a new data frame. Each observation is the death rates of one kind of cancer caused by different external risks. There is a lot of missing values in our dataset because not all types of cancer are related to all kinds of risks. For example, some types of cancer may be induced by air pollution, but will not be induced by alcohol use. 
 
 In order to see the relationship between cancer types and external risks, we analyze the missing values in this data frame below.
-
-```{r}
-plot_missing <- function(df, percent=FALSE) {
-  missing_patterns <- data.frame(is.na(df)) %>%
-  group_by_all() %>%
-  count(name = "count", sort = TRUE) %>%
-  ungroup()
-  
-  pure_pattern <- missing_patterns[,-which(names(missing_patterns) == "count")]
-  pure_pattern$incomplete <- as.logical(rowSums(pure_pattern))
-  missing_patterns$incomplete <- pure_pattern$incomplete
-
-  tidymissing <- missing_patterns %>% 
-    rownames_to_column() %>%
-    gather(key, value, -c(count, rowname, incomplete))
-  
-  tidymissing$rowname <- as.factor(as.numeric(tidymissing$rowname))
-
-  main_plot <- ggplot(tidymissing, aes(x=fct_reorder(key,-value*count, sum),y=fct_rev(rowname),fill=value, alpha=incomplete)) +
-    geom_tile(color="white") + theme_classic() +
-    scale_fill_discrete(type=c("grey", "purple")) +
-    scale_alpha_manual(values = c(1,0.5)) +
-    annotate("text", x = length(unique(tidymissing$key))/2+0.5, y = which(rev(pure_pattern$incomplete)==FALSE), label="complete cases") + 
-    xlab('variable') +
-    ylab('missing pattern') + 
-    theme(legend.position = "none")
-  
-  missing_by_pattern <- missing_patterns %>%
-  select(count, incomplete) %>%
-  rownames_to_column() 
-  
-  missing_by_pattern$rowname <- as.factor(as.numeric(missing_by_pattern$rowname))
-  missing_by_pattern$percentage <- missing_by_pattern$count/sum(missing_by_pattern$count)*100
-  
-  missing_by_pattern$plotby <- missing_by_pattern$count 
-  y_lab_pattern = "row count"
-  if (percent==TRUE) {
-    missing_by_pattern$plotby <- missing_by_pattern$percentage
-    y_lab_pattern = "% rows"
-  }
-
-  pattern_bar <- ggplot(missing_by_pattern, aes(x=fct_rev(rowname), y=plotby, alpha=incomplete)) + 
-    geom_bar(stat="identity",fill="blue") + 
-    scale_alpha_manual(values = c(1,0.5)) +
-    coord_flip() +
-    ylab(y_lab_pattern) +
-    theme(panel.background = element_rect(fill = NA), axis.title.y = element_blank(), panel.grid.major.y = element_blank(), 
-          panel.grid.major.x = element_line(colour="grey"), panel.grid.minor.x = element_line(colour="grey"), panel.grid.minor.y = element_blank(),
-          panel.border = element_rect(fill = NA), legend.position = "none")
-  
-  temp_df = apply(data.frame(is.na(df)),2,sum)
-  ylabel = "num rows\n missing:"
-  if (percent==TRUE) {
-    temp_df = apply(data.frame(is.na(df)),2,mean)*100
-    ylabel = "% rows\n missing:"
-  }
-  
-  missing_by_col <- data.frame(temp_df) %>% 
-    rownames_to_column() %>%
-    filter(rowname!='incomplete')
-
-  colnames(missing_by_col) <- c('key', 'pattern_count')
-
-  col_bar <- ggplot(missing_by_col, aes(x=fct_reorder(key, -pattern_count), y = pattern_count))+geom_bar(stat="identity",fill="lightblue") +
-    ylab(ylabel) +
-    theme(panel.background = element_rect(fill = NA), axis.title.x = element_blank(), panel.grid.major.x = element_blank(), 
-          panel.grid.major.y = element_line(colour="grey"), panel.grid.minor.x = element_blank(),panel.border = element_rect(fill = NA)) +
-    ggtitle("Missing value patterns")
-  
-  if (percent==TRUE) {
-    pattern_bar <- pattern_bar + ylim(0, 100)
-    col_bar <- col_bar + ylim(0, 100)
-  }
-  
-  col_bar + (ggplot()+theme_void())+ main_plot + pattern_bar + plot_layout(ncol=2, widths=c(4,1), heights=c(1,3))
-}
-```
 
 ```{r}
 names(tidydata)<-abbreviate(names(tidydata), minlength = 6)
@@ -234,12 +157,12 @@ Uterine cancer, thyroid cancer and gallbladder and biliary tract cancer have the
 Nasopharynx cancer and larynx cancer have same missing pattern. Other pharynx cancer and lip and oral cavity cancer have same missing pattern. And these two missing patterns are also similar to each other. It makes sense since they are all related to throat.
 
 
-## question 2
+## Cancer by Country Dataset
 
-The data set that contains the death rate and number among coutries cointain null variable Brazil. Besides, the health cost of GDP and health cost per capita contains many null data from 1995 t0 2015.  Here the missing plot can also show the fact that missing data are concentrated at health cost. The misssing data of  GDP and GNI are coused by Brazil in 2019.
+The dataset mainly has null value for health cost per capita and health cost among GDP.Most of the missing data are from 1990 to 1995.Besides,there are a  few missing data of GDP and GNI. Actually, we lack of the GDP and GNI data about Brazil. Therefore, for our further analysis, when we need GDP an GNI data, we plan to exclude Brazil. When analysing health cost related data,we plan to exclude 1990  and 1995 becuase too concentrated missing data can negatively affect our analysis and there seems no reliable predictive data to fill these NAs.
+
 ```{r}
 data = read_csv("./data/finalData.csv")
+names(data)<-abbreviate(names(data), minlength = 7)
 plot_missing(data)
 ```
-
-## question 3

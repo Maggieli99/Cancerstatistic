@@ -9,8 +9,21 @@
 
 <body>
   <header>
-    <h1>Interactive Plot</h1>
+    <h2><b>Death rate (per 100k) by Country over Years</b></h2>
   </header>
+  
+  <p>
+  <b>Instructions:</b>
+  
+    1. Click the buttons to compare death rate in different years
+    
+    2. Hover the mouse over a bar (bar turns orange) to see the exact death rate of a country
+    
+  <b>Description:</b>
+  
+    The interactive plot is built with D3 version 7. It shows the death rate of 19 chosen countries from year 1990 to year 2019 with every 5 years apart (except for 2019 since we do not have data for 2020). By clicking the "year" button in order, we can clearly see how and how fast the death rate increases over years. If look carefully, we can notice that the death rate for Japan always increases at a fast rate. It is surprising since people may think developed country should have excellent medical facility and so lead to slow increasing in cancer death rate. But the plot shows that developed countries actually have larger increasing rate of cancer death rate than that of developing and under developed country.
+    
+  </p>
 
 
  <div id="interaction">
@@ -52,7 +65,7 @@
           .attr("dx","-.8em")
           .attr("dy","-.5em")
 
-          y.domain([0, 500])//d3.max(data, function(d) { return +d[selectedVar] }) ]);
+          y.domain([0, 350])//d3.max(data, function(d) { return +d[selectedVar] }) ]);
           yAxis.call(d3.axisLeft(y));
 
           // create line
