@@ -319,6 +319,7 @@ ggarrange(plot_2000,plot_2005,plot_2010,plot_2015,
 ```
 
 ## Is the World Making Progress against Cancers?
+
 ### Age-standardized cancer death rates
 
 ```{r}
@@ -387,6 +388,8 @@ From what the figure shown, we found there is a obvious increase in death number
 The second major reason is that the world has made significant progress in decreasing causes of death that can be detected at an individual's young age. Since the development of technology such as the creation of advanced instruments and the doctor's outstanding medical skills, some disease may not develop to cancer. However, there is still an increase in death number; that is, the population of the world is aging and this means when people are getting old, they will die because of cancer. Also, this reason is a natural occurrences when people getting old. 
 Also, we can predict that the death number would continuously increase since diseases may not transfer to cancer because of the prevention by advanced medical technology.
 
+
+
 ### Year of life lost rate is decreasing.
 ```{r}
 cause_type <- c("Stomach cancer", "Breast cancer", "Liver cancer", "Tracheal, bronchus, and lung cancer", "Nasopharynx cancer", "Esophageal cancer", "Kidney cancer", "Mesothelioma")
@@ -417,10 +420,7 @@ highchart() %>%
   hc_title(text = "Year of Life Lost Rate in 30 years ") %>%
   #hc_chart(data = series, type="bar", hcaes(y = sequence, color = cause)) %>%
   hc_add_series(data = series, type="bar") %>% 
-  hc_legend(layout = "vertical",
-            align = "right",
-            title = list(text = 'Rate'),
-            verticalAlign = "top") %>%
+  hc_legend(align = "right") %>%
   hc_motion(
     enabled = TRUE,
     labels = cmp2$year,
