@@ -8,6 +8,9 @@ library(highcharter)
 library(ggplot2)
 library(ggmosaic)
 library(treemap)
+library(plotly)
+library(ggpubr)
+library(RColorBrewer)
 ```
 
 
@@ -199,18 +202,12 @@ Over the 30 years, environmental risks has always been the leading role of causi
 
 
 
-## question 2
-```{r}
-library(ggplot2)
-library(dplyr)
-library(tidyverse)
-library(tidyr)
-library(highcharter)
-library(plotly)
-library(ggpubr)
-```
-Heatmap of Death Rate in World
-The heatmap of death rate can show the death rate among the coutries shown in the world map. You can alsoo click the run button and then we also see the death rate change from 1990 to 2019. From 1990 to 2019, the red area where death rate become higher so the color is lighter. However, from 1990 to 2019, the death rate in blue zone where death rate are high become lower when the color are lighter.
+## Relationship between Cancer Deaths and Country Development
+
+### Heatmap of Death Rate in World
+
+The heatmap of death rate can show the death rate among the countries shown in the world map. You can also click the run button and then we also see the death rate change from 1990 to 2019. From 1990 to 2019, the red area where death rate become higher so the color is lighter. However, from 1990 to 2019, the death rate in blue zone where death rate are high become lower when the color are lighter.
+
 ```{r}
 data = read_csv(file = './data/finalData.csv')
 new_data = data %>% 
@@ -219,8 +216,9 @@ new_data = data %>%
     .$item
 
 highchart(type = 'map') %>%
-  hc_add_series(data =  new_data,joinBy = c('name','country'),mapData = worldgeojson,  dataLabels = list(enabled = TRUE, format = "{point.properties.postalcode}"))  %>%
-  hc_colorAxis(stops = color_stops(n = 3, colors = c("firebrick2","white","dodgerblue3")))  %>%
+  hc_add_series(data =  new_data,joinBy = c('name','country'), mapData = worldgeojson, dataLabels = list(enabled = TRUE, format = "{point.properties.postalcode}"))  %>%
+  hc_colorAxis(stops = color_stops(n = 3, colors = c("firebrick2","white","dodgerblue3")),
+               max=400,min=0)  %>%
 
   hc_motion(enabled = TRUE,
     axisLabel = "year",labels =as.character(sort(unique(data$year),decreasing = FALSE)),
@@ -236,8 +234,10 @@ highchart(type = 'map') %>%
 
 ```
 
-Bubble Plot 
-The bubble plot can show the death rate versus health cost of GDP. The size of bubble can also show the GDP per capita. If you move the mouse over the bubble, we can also see the name of country. The result is interesting: in most cases, higher health cost of GDP means the high death rate and higher GDP. However, America does not follow this rule: America have high health cost of GDP but the death only in the middle level. The rules are followed across the years. 
+### Bubble Plot of Death Rate vs Health Cost of GDP
+
+The bubble plot can show the death rate versus health cost of GDP. The size of bubble can also show the GDP per capita. If you move the mouse over the bubble, we can also see the name of country. The result is interesting: in most cases, higher health cost of GDP means the high death rate and higher GDP. However, America does not follow this rule: America have high health cost of GDP but the death only in the middle level. The rules are followed across the years.
+
 ```{r}
 new_data = data[-which(data$location=='Brazil'),]
 new_data = new_data[new_data$year %in% c('2000','2005','2010','2015'),]
@@ -246,6 +246,7 @@ x2005 = new_data[new_data$year=='2005',]
 x2010 = new_data[new_data$year=='2010',]
 x2015 = new_data[new_data$year=='2015',]
 ```
+
 ```{r}
 new_data
 fig <- new_data %>%
@@ -264,11 +265,12 @@ fig <- new_data %>%
   )
 fig
 ```
-Accumulated Death Among Countries
 
-In this plot, I stacked the total amount of death from 2000 to 2015. Here, it is easy to see that China has much larger amout of death than other countries. The death amount is hugely depend on the population of each countries, so many countries with small poplution has small death amount and  countries with large population has large death amount. Interestingly, even though India and US has large population, the death amount  is still much smaller than China. 
+### Accumulated Death Among Countries
+
+In this plot, I stacked the total amount of death from 2000 to 2015. Here, it is easy to see that China has much larger amount of death than other countries. The death amount is hugely depend on the population of each countries, so many countries with small population has small death amount and countries with large population has large death amount. Interestingly, even though India and US has large population, the death amount is still much smaller than China. 
+
 ```{r}
-library(RColorBrewer)
 COLORS <- RColorBrewer::brewer.pal(6, "Set2")
 
 new_data %>%
@@ -282,8 +284,10 @@ new_data %>%
   hc_subtitle(text = "Click on the legend to show selected years") %>%
   hc_exporting(enabled = TRUE)
 ```
-Death Rate by GDP
-Here, I combie four plots of deeath rate by GDP from 2000 to 2015. In this plot, I only try to explore the death rate affected by GDP. The four plots show that the trend are not changed from 2000 to 2019: high GDP means high death rate. Even though high GDP mean high income and better living condtion, it does not mean the death rate are lower. In highly developed countries, there are still many factors that can affect people's health and cancer is still a big threathen to developed countries. 
+
+### Death Rate by GDP
+
+Here, I combine four plots of death rate by GDP from 2000 to 2015. In this plot, I only try to explore the death rate affected by GDP. The four plots show that the trend are not changed from 2000 to 2019: high GDP means high death rate. Even though high GDP mean high income and better living condition, it does not mean the death rate are lower. In highly developed countries, there are still many factors that can affect people's health and cancer is still a big threaten to developed countries. 
 
 ```{r}
 new_data  =  data %>%
@@ -319,6 +323,7 @@ ggarrange(plot_2000,plot_2005,plot_2010,plot_2015,
 ```
 
 ## Is the World Making Progress against Cancers?
+
 ### Age-standardized cancer death rates
 
 ```{r}
@@ -350,12 +355,14 @@ ggplot(data = cancer_making_progress1, aes(x=year,y=Death_rate, group =cause ,co
 
 
 ```
+
 We randomly chose eight common cancers in our life to watch how their death_rate change in thirty years. We cannot only look at absolute death numbers to see if we've made success in the fight against cancer. It doesn't explain the world's population expansion. Hence, health statisticians investigate death rate, which calculates the number of cancer deaths per 100,000 individuals. It is conspicuous that the death rate shows a decreasing trend in those 30 years especially for Liver cancer, Esophageal cancer, stomach cancer and Tracheal, bronchus and lung cancer. Moreover, this measure is based on Age-Standardized rate, which tells us what the death rate will be if the age structure of the population remains unchanged over time. Hence, we can say the world is making slow progress. Most deaths are caused by smoking since we can observe Tracheal, bronchus and lung cancer contributes to the highest death rate globally. Here is a strong decline of death rates for lunger cancer since smoking rate is decreasing in these years.
 
 
 
 
 ### The number of cancer deaths is increasing 
+
 ```{r}
 library(ggthemes)
 cause_type <- c("Stomach cancer", "Breast cancer", "Liver cancer", "Tracheal, bronchus, and lung cancer", "Nasopharynx cancer", "Esophageal cancer", "Kidney cancer", "Mesothelioma")
@@ -365,6 +372,7 @@ cancer_making_p <- cmp[,c(2,3,4)] %>%
   mutate(Death_numbers=first(Deaths_Number))%>% 
   summarise(Death_numbers=first(Deaths_Number))
 ```
+
 ```{r}
 options(scipen=200)
 ggplot(cancer_making_p,aes(year,Death_numbers,fill=cause))+
@@ -378,9 +386,13 @@ theme( panel.grid.major=element_line(colour=NA),
   legend.text = element_text(size=8), axis.text.x = element_text(angle=90))+
 scale_x_continuous(limits = c(1990,2019),breaks = seq(1990,2019,1))
 ```
+
 The number of cancer deaths grew from roughly about 3 million in 1990 to 5 million in 2019 for those eight random cancers, as indicated in the graph.
+
 There are two causes for this, as we've just seen: The first is that the global population is growing, which is followed by an increase in the annual death toll.
+
 The second major reason is that the world has made significant progress in decreasing causes of mortality that used to kill individuals young, particularly infectious illnesses.This indicates that the world's population is aging, and an increasing number of individuals are dying of cancer and other causes.
+
 We may predict a rise in the number of individuals dying early as the globe grows wealthier.
 
 
@@ -434,8 +446,6 @@ highchart() %>%
 ```
 
 
-
-
 ```{r}
 cause_type <- c("Stomach cancer", "Breast cancer", "Liver cancer", "Tracheal, bronchus, and lung cancer", "Nasopharynx cancer", "Esophageal cancer", "Kidney cancer", "Mesothelioma")
 cmp3 <- cancer_making_progress[,c(2,3,8)] %>% 
@@ -461,6 +471,4 @@ ggplot(data = cmp3, aes(x=year,y=Year_of_Life_with_Disability, group =cause ,col
        axis.text.x = element_text(angle=90),
         legend.box.background = element_rect(color="black"))+
   scale_x_continuous(limits = c(1990,2019),breaks = seq(1990,2019,1))
-
-
 ```

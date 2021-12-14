@@ -14,7 +14,7 @@ Especially for families with poor financial status, not only must they consider 
 In this project, three questions that we would like to persue are as follows:
 
 - By how much is all kinds of cancer caused by external factors?
-- What is the relationship between cancer survival rate and level of development (population, GDP, income, inequality, and so on) of a country?
+- What is the relationship between cancer death rate and level of development (population, GDP, income, inequality, and so on) of a country?
 - How does the world make propress against cancer over time?
 
 To answer the questions above, we collected our cancer data from [*Global health Data Exchange*](http://ghdx.healthdata.org/gbd-results-tool?params=gbd-api-2019-public/27c2971bf0d3c792a091d314be89798f). The data source we find includes data on many different aspect of cancer, including cancer prevalence, cancer mortality over time, causes of cancer and so on. From these data source, we can get the information that how cancer is relating to our world that it not only affects each family but also influence sundry countries. During this pandemic, the discussion one health problems should be on the agenda urgently. Via merging different tables, we can extract the data we need, and find the conclusion of our above cancer related questions.

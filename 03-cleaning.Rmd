@@ -5,11 +5,12 @@ library(readr)
 library(tidyverse)
 library(tidyr)
 library(dplyr)
+library(tidyr)
 ```
 
 All of our datasets generated from GBD results tool need to be pre-processed as they are not in a tidy format originally. Please go to our [github repo chapter](https://github.com/Maggieli99/Cancerstatistic/blob/main/03-cleaning.Rmd) to see code in detail.
 
-## The Effect of External Factors on Cancer
+## Cancer Risk Data Transformation
 
 For the risk data, we first removed the used columns "location", "upper" and "lower". And then we pivoted our dataset so that the combinations of *measure* and *metric* became new columns (variables) in the wider tidy data and values in *val* were placed in the corresponding entries. We also updated the columns names of our new data frame so that these names are more precise. Finally, noticed that all of our columns of character type have limited number of categories, we transformed all character columns into factors.
 
@@ -42,9 +43,10 @@ str(cancer_risk)
 
 
 
-## question 2
+## Cancer by Country Data Transformation
 
-The orginal dataset of countries contains more than 2000 rows of basic information of each countries so here we pick important factors towards to death of rate including GDP, GNI, health cost per capita and health cost percent of total GDP.  Besides, we also spread the measure of cancer death including perceent, rate and number. Here, we also add a year column.  The updated dataset are shown below and is tidy meanwhile.
+The original dataset of countries contains more than 2000 rows of basic information of each countries so here we pick important factors towards to death rate including GDP, GNI, health cost per capita and health cost percent of total GDP. Besides, we also spread the measure of cancer death including percent, rate and number. Here, we also add a year column. The updated dataset are summarized below and is tidy meanwhile.
+
 ```{r}
 cancer = read.csv(file = './data/final.csv',header = TRUE)
 cancer = cancer %>%
@@ -88,20 +90,20 @@ data = data[-c(1)]
 data$year  = as.character(data$year)
 cat(NULL,file="./data/finalData.csv")
 write_csv(data,'./data/finalData.csv')
-
-cancer = read.csv(file = './data/finalData.csv',header = TRUE)
-cancer = cancer %>% select(c(year,Rate,location)) %>%
-  spread(year,Rate)
-cancer
-cat(NULL,file="./data/interactive.csv")
-write_csv(cancer,'./data/interactive.csv')
-
-
+str(data)
 ```
 
 
+```{r}
+cancer = read.csv(file = './data/finalData.csv',header = TRUE)
+cancer = cancer %>% select(c(year,Rate,location)) %>%
+  spread(year,Rate)
+cat(NULL,file="./data/interactive.csv")
+write_csv(cancer,'./data/interactive.csv')
+```
 
-## question 3
+
+## Cancer Time Series Data Transformation
 
 For the making_progress data, we need to do the similar step with risk data, that is, we first removed the used columns "location", "upper" and "lower","sex", since what we need to show is a global trend for both female and male. And then we pivoted our dataset so that the combinations of *measure* and *metric* became new columns (variables) in the wider tidy data and values in *val* were placed in the corresponding entries. To be more precise and clear, we need to change the column name for the metric. 
 
@@ -110,11 +112,6 @@ cancer_making_progress <- read_csv("./data/making_progess.csv")
 ```
 
 ```{r}
-library(ggplot2)
-library(dplyr)
-library(tidyverse)
-library(tidyr)
-library(highcharter)
 # clean and pivot dataset
 cancer_making_progress <- cancer_making_progress %>% 
   select(-c('location', 'upper', 'lower', 'sex')) %>%
@@ -123,7 +120,7 @@ cancer_making_progress <- cancer_making_progress %>%
 ```
 
 ```{r}
-names(cancer_making_progress)[c(4, 6,7,8)]<-c('DALYs_Rate', 'YLLs_Rate', 'YLDs_Percent', 'YLDs_Rate')
+names(cancer_making_progress)[c(4,6,7,8)]<-c('DALYs_Rate', 'YLLs_Rate', 'YLDs_Percent', 'YLDs_Rate')
 ```
 
 ```{r}
