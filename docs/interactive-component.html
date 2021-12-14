@@ -204,13 +204,15 @@ Interactive Plot
 </h2>
 </header>
 <p>
-<p><b>Instructions:</b>
-1. Click the buttons to compare death rate in different years</p>
+<p><b>Instructions:</b></p>
+<ol style="list-style-type: decimal">
+<li>Click the buttons to compare death rate in different years</li>
+</ol>
 <ol start="2" style="list-style-type: decimal">
 <li>Hover the mouse over a bar (bar turns orange) to see the exact death rate of a country</li>
 </ol>
-<p><b>Description:</b>
-The interactive plot is built with D3 version 7. It shows the death rate of 19 chosen countries from year 1990 to year 2019 with every 5 years apart (except for 2019 since we do not have data for 2020). By clicking the “year” button in order, we can clearly see how and how fast the death rate increases over years. If look carefully, we can notice that the death rate for Japan always increases at a fast rate. It is surprising since people may think developed country should have excellent medical facility and so lead to slow increasing in cancer death rate. But the plot shows that developed countries actually have larger increasing rate of cancer death rate than that of developing and under developed country.</p>
+<p><b>Description:</b></p>
+<p>The interactive plot is built with D3 version 7. It shows the death rate of 19 chosen countries from year 1990 to year 2019 with every 5 years apart (except for 2019 since we do not have data for 2020). By clicking the “year” button in order, we can clearly see how and how fast the death rate increases over years. If look carefully, we can notice that the death rate for Japan always increases at a fast rate. It is surprising since people may think developed country should have excellent medical facility and so lead to slow increasing in cancer death rate. But the plot shows that developed countries actually have larger increasing rate of cancer death rate than that of developing and under developed country.</p>
 </p>
 <div id="interaction">
 <button onclick="update('1990')">Year 1990</button>
@@ -222,7 +224,7 @@ The interactive plot is built with D3 version 7. It shows the death rate of 19 c
 <button onclick="update('2019')">Year 2019</button>
 </div>
 <script>
-   var margin = {top: 60, right: 30, bottom: 200, left: 50};
+   var margin = {top: 30, right: 30, bottom: 200, left: 50};
    var height = 600 - margin.top - margin.bottom;
    var width = 800 - margin.right - margin.left;
    var svg = d3.select("#interaction")
